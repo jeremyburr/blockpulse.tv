@@ -27,30 +27,27 @@ class Circles extends Component {
 			data: [] 
 		};
 		this.add = this.add.bind(this);
-		this.remove = this.remove.bind(this);
+  	this.remove = this.remove.bind(this);
 	}
 
 	add() {
 		console.log('add()');
-		var data = this.state.data;
+		var data = this.state.data.slice(0);
 		data.push({key: Date.now(), x: Math.random(), y: Math.random(), r: Math.random()})
 		this.setState ({
 			data: data
 		})
-		//render();
 		setTimeout(this.state.data.length < 100 ? this.add : this.remove, 5);
 	}
 
 	remove() {
 		console.log('remove()');
-		var data = this.state.data;
+		var data = this.state.data.slice(1);
 		this.setState ({
-			data: data.slice(1)
+			data: data
 		})
-		//render();
-		if (++circlesCreated === 1000) console.timeEnd('1000 circles');
-		setTimeout(data.length > 0 ? this.remove : this.add, 5);
-	} 
+		setTimeout(this.state.data.length === 100 ? this.remove : this.add, 5);
+	}
 
   componentDidMount() { 
 
@@ -63,12 +60,13 @@ class Circles extends Component {
       } 
     }; 
 
-		console.time('1000 circles');
 		this.add();
 			
   }
 
-	compondentDidUpdate() {
+	componentDidUpdate() {
+
+		/*console.log('componentDidUpdate()');
 		
 		var item = d3.select(this.myRef).selectAll('circle'); 
 
@@ -88,7 +86,7 @@ class Circles extends Component {
       .attr('cy', height)
       .style('stroke', '#3E6E9C')
       .remove();
-
+*/
 	}
 
   render() {
