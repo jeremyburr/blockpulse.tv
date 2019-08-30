@@ -22,10 +22,10 @@ class Circles extends Component {
   
 	constructor() {
 		super();
-		this.myRef = React.createRef(); 
 		this.state = {
 			data: [] 
 		};
+		this.myRef = React.createRef(); 
 		this.add = this.add.bind(this);
   	this.remove = this.remove.bind(this);
 	}
