@@ -1,8 +1,8 @@
 import React, { Component } from 'react'; 
 import * as d3 from "d3";
 
-var width = 400,
-	height = 400;
+var width = window.innerWidth,
+	height = window.innerHeight;
 
 var x = d3.scaleLinear()
 	.domain([0, 1])
@@ -10,7 +10,7 @@ var x = d3.scaleLinear()
 
 var y = d3.scaleLinear()
 	.domain([0, 1])
-	.range([150, height - 150]);
+	.range([0, height]);
 
 var r = d3.scaleSqrt()
 	.domain([0, 1])
@@ -57,7 +57,7 @@ class Circles extends Component {
 			console.log('events.length: ',events.length); 
 
 			var svg = d3.select(svgElement).selectAll('circle') 
-			.data(events, function(d) { return d.key });
+			.data(events, function(d) { return d.key })
 
 			svg.enter().append('circle')
 				.attr('class', 'item')
@@ -83,7 +83,7 @@ class Circles extends Component {
   render() {
     return  (
       <div>
-				<svg ref={this.myRef} width="960" height="500"></svg>
+				<svg ref={this.myRef} width={window.innerWidth} height={window.innerHeight} ></svg>
 			</div> 
     ) 
   } 
