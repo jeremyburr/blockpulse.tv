@@ -69,11 +69,12 @@ class Circles extends Component {
 				//.attr('cy', function(d) { return y(d.y); })
 				.style('stroke', 'orange');
 
-			svg.exit().filter(':not(.exiting)').remove() // Don't select already exiting nodes
+			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
 				.classed('exiting', true)
 			.transition().duration(1000)
 				//.attr('opacity', 0)
 				.style('stroke', 'blue')
+				.remove()
 
 			
       } 
