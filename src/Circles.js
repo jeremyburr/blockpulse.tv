@@ -61,19 +61,17 @@ class Circles extends Component {
 
 			svg.enter().append('circle')
 				.attr('class', 'item')
-				.attr('r', function(d) { return 4; })
+				.attr('r', function(d) { return 8; })
 				.attr('cx', function(d) { return x(d.x); })
 				.attr('cy', function(d) { return y(d.y);})
-				.style('stroke', '#3E6E9C')
+				//.style('fill', 'orange')
 			.transition().duration(1000)
 				//.attr('cy', function(d) { return y(d.y); })
-				.style('stroke', 'orange');
+				.style('fill', 'orange')
 
 			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
 				.classed('exiting', true)
 			.transition().duration(1000)
-				//.attr('opacity', 0)
-				.style('stroke', 'blue')
 				.remove()
 
 			
