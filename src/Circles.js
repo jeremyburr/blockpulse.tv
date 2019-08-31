@@ -16,84 +16,58 @@ var r = d3.scaleSqrt()
 	.domain([0, 1])
 	.range([0, 30]);
 
-var circlesCreated = 0; 
+var events = []; 
 
 class Circles extends Component { 
-  
+	
 	constructor() {
 		super();
-		this.state = {
-			data: [] 
-		};
-		this.myRef = React.createRef(); 
-		this.add = this.add.bind(this);
-  	this.remove = this.remove.bind(this);
+		this.myRef = React.createRef();
 	}
-
-	add() {
-		console.log('add()');
-		var data = this.state.data.slice(0);
-		data.push({key: Date.now(), x: Math.random(), y: Math.random(), r: Math.random()})
-		this.setState ({
-			data: data
-		})
-		setTimeout(this.state.data.length < 100 ? this.add : this.remove, 5);
-	}
-
-	remove() {
-		console.log('remove()');
-		var data = this.state.data.slice(1);
-		this.setState ({
-			data: data
-		})
-		setTimeout(this.state.data.length === 100 ? this.remove : this.add, 5);
-	}
-
+  
   componentDidMount() { 
 
+		
+		 	
 		// Get unconfirmed transactions
     var websocket = this.props.websocket; 
+		var svgElement = this.myRef.current;
     websocket.onopen = function(evt) { 
 			websocket.send('{"op":"unconfirmed_sub"}'); 
       websocket.onmessage = function(evt) { 
-        //console.log('evt',evt);
+			events.push({key: Date.now(), x: Math.random(), y: Math.random(), r: Math.random()});
+			console.log('events: ',events);
+        //console.log('evt',evt); 
+
+			var svg = d3.select(svgElement).selectAll('circle') 
+			.data(events, function(d) { return d.key });
+
+			svg.enter().append('circle')
+				.attr('class', 'item')
+				.attr('r', function(d) { return r(d.r); })
+				.attr('cx', function(d) { return x(d.x); })
+				.attr('cy', 0)
+				.style('stroke', '#3E6E9C')
+			.transition().duration(1000)
+				.attr('cy', function(d) { return y(d.y); })
+				.style('stroke', '#81E797');
+
+			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
+				.classed('exiting', true)
+			.transition().duration(1000)
+				.attr('cy', height)
+				.style('stroke', '#3E6E9C')
+
+			
       } 
     }; 
-
-		this.add();
-			
-  }
-
-	componentDidUpdate() {
-
-		/*console.log('componentDidUpdate()');
 		
-		var item = d3.select(this.myRef).selectAll('circle'); 
-
-		 item.enter().append('circle')
-      .attr('class', 'item')
-      .attr('r', function(d) { return r(d.r); })
-      .attr('cx', function(d) { return x(d.x); })
-      .attr('cy', 0)
-      .style('stroke', '#3E6E9C')
-    .transition().duration(1000)
-      .attr('cy', function(d) { return y(d.y); })
-      .style('stroke', '#81E797');
-
-    item.exit().filter(':not(.exiting)') // Don't select already exiting nodes
-      .classed('exiting', true)
-    .transition().duration(1000)
-      .attr('cy', height)
-      .style('stroke', '#3E6E9C')
-      .remove();
-*/
-	}
+  } 
 
   render() {
     return  (
       <div>
-				<svg ref={this.myRef} data={this.state.data} width="400" height="400"></svg>
-				Circles Content
+				<svg ref={this.myRef} width="960" height="500"></svg>
 			</div> 
     ) 
   } 
