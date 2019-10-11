@@ -28,6 +28,7 @@ class Circles extends Component {
   componentDidMount() { 
 		 	
 		// Get unconfirmed transactions
+
     var websocket = this.props.websocket; 
 		var svgElement = this.myRef.current;
     websocket.onopen = function(evt) { 
@@ -36,21 +37,13 @@ class Circles extends Component {
 			var dateNow = Date.now();
 			events.push({key: dateNow, x: Math.random(), y: Math.random(), r: Math.random()});
 
-			setTimeout(function() {
-
+			setTimeout(function() { 
 				function getDateNow(event) { 
-					console.log('event.key',event.key);
-					console.log('dateNow',dateNow);
-					console.log(event.key === dateNow);
 				  return event.key === dateNow;
 				}
 
-					var eventIndex = events.findIndex(getDateNow);
-
-					console.log('eventIndex',eventIndex);
-
-					events.splice(eventIndex,1);
-
+					var eventIndex = events.findIndex(getDateNow); 
+					events.splice(eventIndex,1); 
 
 			},1000);
 
@@ -64,16 +57,13 @@ class Circles extends Component {
 				.attr('r', function(d) { return 8; })
 				.attr('cx', function(d) { return x(d.x); })
 				.attr('cy', function(d) { return y(d.y);})
-				//.style('fill', 'orange')
 			.transition().duration(1000)
-				//.attr('cy', function(d) { return y(d.y); })
 				.style('fill', 'orange')
 
 			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
 				.classed('exiting', true)
 			.transition().duration(1000)
-				.remove()
-
+				.remove() 
 			
       } 
     }; 
