@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Circles from './Circles.js';
 
-var wsUri = "wss://ws.blockchain.info/inv"; 
+var wsUri = "ws://67.205.134.170:8090"; 
 var websocket = new WebSocket(wsUri); 
 
 class App extends Component {

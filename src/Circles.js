@@ -12,9 +12,9 @@ var y = d3.scaleLinear()
 	.domain([0, 1])
 	.range([0, height]);
 
-var r = d3.scaleSqrt()
+/*var r = d3.scaleSqrt()
 	.domain([0, 1])
-	.range([0, 30]);
+	.range([0, 30]);*/
 
 var events = []; 
 
@@ -32,7 +32,7 @@ class Circles extends Component {
     var websocket = this.props.websocket; 
 		var svgElement = this.myRef.current;
     websocket.onopen = function(evt) { 
-			websocket.send('{"op":"unconfirmed_sub"}'); 
+			//websocket.send('{"op":"unconfirmed_sub"}'); 
       websocket.onmessage = function(evt) { 
 			var dateNow = Date.now();
 			events.push({key: dateNow, x: Math.random(), y: Math.random(), r: Math.random()});
