@@ -5,17 +5,11 @@ var wsUri = "ws://67.205.134.170:8090";
 var websocket = new WebSocket(wsUri); 
 
 class App extends Component {
-	constructor() {
-		super();
-		this.state = {
-			websocket: websocket 
-		};
-	}
 
 	render() { 
 		return (
 			<div>
-        <Circles websocket={this.state.websocket} />
+        <Circles websocket={websocket} />
 			</div>
 		);
   }
