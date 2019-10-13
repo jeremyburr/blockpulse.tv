@@ -10,11 +10,7 @@ var x = d3.scaleLinear()
 
 var y = d3.scaleLinear()
 	.domain([0, 1])
-	.range([0, height]);
-
-/*var r = d3.scaleSqrt()
-	.domain([0, 1])
-	.range([0, 30]);*/
+	.range([0, height]); 
 
 var events = []; 
 
@@ -31,9 +27,11 @@ class Circles extends Component {
 
     var websocket = this.props.websocket; 
 		var svgElement = this.myRef.current;
+
     websocket.onopen = function(evt) { 
-			//websocket.send('{"op":"unconfirmed_sub"}'); 
+
       websocket.onmessage = function(evt) { 
+
 			var dateNow = Date.now();
 			events.push({key: dateNow, x: Math.random(), y: Math.random(), r: Math.random()});
 
@@ -42,14 +40,10 @@ class Circles extends Component {
 				  return event.key === dateNow;
 				}
 
-					var eventIndex = events.findIndex(getDateNow); 
-					events.splice(eventIndex,1); 
+			var eventIndex = events.findIndex(getDateNow); 
+			events.splice(eventIndex,1); 
 
-			},1000);
-
-			console.log('events.length: ',events.length); 
-
-			var svg = d3.select(svgElement).selectAll('circle') 
+      	var svg = d3.select(svgElement).selectAll('circle') 
 			.data(events, function(d) { return d.key })
 
 			svg.enter().append('circle')
@@ -57,12 +51,32 @@ class Circles extends Component {
 				.attr('r', function(d) { return 8; })
 				.attr('cx', function(d) { return x(d.x); })
 				.attr('cy', function(d) { return y(d.y);})
-			.transition().duration(1000)
 				.style('fill', 'orange')
 
 			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
 				.classed('exiting', true)
-			.transition().duration(1000)
+        .transition().duration(500)
+        .style('opacity',0)
+				.remove() 
+
+			});
+
+			//console.log('events.length: ',events.length); 
+
+			var svg = d3.select(svgElement).selectAll('circle') 
+			.data(events, function(d) { return d.key })
+
+			svg.enter().append('circle')
+				.attr('class', 'item')
+				.attr('r', function(d) { return 10; })
+				.attr('cx', function(d) { return x(d.x); })
+				.attr('cy', function(d) { return y(d.y);})
+				.style('fill', 'orange')
+
+			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
+				.classed('exiting', true)
+        .transition().duration(500)
+        .style('opacity',0)
 				.remove() 
 			
       } 

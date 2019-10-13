@@ -15,8 +15,7 @@ class App extends Component {
 	render() { 
 		return (
 			<div>
-				 BlockPulse.tv 
-			<Circles websocket={this.state.websocket} />
+        <Circles websocket={this.state.websocket} />
 			</div>
 		);
   }
