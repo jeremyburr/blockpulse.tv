@@ -68,9 +68,9 @@ class Circles extends Component {
 
 				var valueSum = 0;
 
-				info.outs.forEach(valueObj => {
+				for (var valueObj of info.outs) {
 					valueSum+=valueObj.value;
-				});
+				};
 
 				console.log('valueSum',valueSum); 
 
