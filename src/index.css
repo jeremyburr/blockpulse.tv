@@ -12,8 +12,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} 
 
-svg {
-  /*border: solid 1px white;*/
+path { 
+  color: white;
+  stroke-width: 1;
+  stroke: #FFF;
+  /*stroke: #ffab00;*/
 }
