@@ -16,12 +16,12 @@ class LineChart extends Component {
 			.range([0,width]);
 
 		var yScale = d3.scaleLinear()
-			.domain([0,1])
+			.domain([0,10])
 			.range([height,0]);
 
 		var line = d3.line()
 			.x(function(d){return xScale(d)})
-			.y(function(d){return yScale(.5)})
+			.y(function(d){return yScale(d)})
 
 		var svg = d3.select('body')
 			.append("svg") 
@@ -37,19 +37,8 @@ class LineChart extends Component {
 		svg.append("g")
 			.call(d3.axisLeft(yScale)); 
 
-			/*console.log('line',line);
-			console.log('line.x',line.x());
-			console.log('line.y',line.y());*/
-
-			var lineX = line.x();
-			console.log('line.x()',line.x());
-
-			var lineY = line.y();
-			console.log('line.y()',line.y());
-
 		svg.append("path")
-			.attr("d",line(data));
-					
+			.attr("d",line(data)); 
 
 	 }
 
