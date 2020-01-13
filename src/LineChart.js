@@ -13,10 +13,6 @@ class LineChart extends Component {
 		, width = window.innerWidth - margin.left - margin.right 
     , height = window.innerHeight - margin.top - margin.bottom; 
 
-		var xScale = d3.scaleLinear()
-			.domain([start,end])
-			.range([0,width])
-
 		var svg = d3.select('body')
 			.append("svg") 
 				.attr("width",width + margin.left + margin.right)
@@ -26,37 +22,22 @@ class LineChart extends Component {
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 				.attr("class","translate-container"); 
 
-		var axisX = svg.append("g") 
+		var xScale = d3.scaleTime()
+			.range([0,width]);
+
+		var xAxis = d3.axisBottom(xScale); 
+
+		var xG = svg.append("g") 
 				.attr("class","x-axis")
 				.attr("transform", "translate(" + 0 + "," + height + ")")
-				.call(xScale.axis = d3.axisBottom(xScale)); 
+				.call(xAxis); 
 		
-		var axisXTransition = axisX
-		.transition()
-    .duration(duration)
-    .ease(d3.easeLinear); 
+		d3.timer(function() {
+		  var now = Date.now();
+			  xScale.domain([now - 10 * 6000, now]);
+				xG.call(xAxis);
+		});
 
-    (function tick()  { 
-
-			start++;
-			end++; 
-
-			axisXTransition = axisXTransition.each(function() { 
-
-				xScale.domain([start,end]) 
-
-				axisX
-					.transition()
-					.duration(duration)
-					.ease(d3.easeLinear)
-					.call(xScale.axis);
-
-				var axisTick = d3.selectAll(".tick")
-					.attr("opacity","1") 
-
-      }).transition().on('start',tick); 
-
-    })();
 
 	 }
 
