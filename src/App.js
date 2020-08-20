@@ -10,8 +10,8 @@ class App extends Component {
 	render() { 
 		return (
 			<div>
-        {/*<Circles websocket={websocket} />*/}
-        <LineChart />
+				{/*<Circles websocket={websocket} />*/}
+				<LineChart />
 			</div>
 		);
   }

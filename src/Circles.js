@@ -1,107 +1,107 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import * as d3 from "d3";
 //const bitcoinjs = require("bitcoinjs-lib");
 
 var width = window.innerWidth,
-	height = window.innerHeight;
+  height = window.innerHeight;
 
 var x = d3.scaleLinear()
-	.domain([0, 1])
-	.range([0, width]);
+  .domain([0, 1])
+  .range([0, width]);
 
 var y = d3.scaleLinear()
-	.domain([0, 1])
-	.range([0, height]); 
+  .domain([0, 1])
+  .range([0, height]);
 
-var events = []; 
+var events = [];
 
-class Circles extends Component { 
-	
-	constructor() {
-		super();
-		this.myRef = React.createRef();
-	}
-  
-  componentDidMount() { 
+class Circles extends Component {
 
-		function reRender() {
+  constructor() {
+    super();
+    this.myRef = React.createRef();
+  }
 
-			//console.log('events:',events); 
+  componentDidMount() {
 
-			var svg = d3.select(svgElement).selectAll('circle') 
-			.data(events, function(d) { 
+    function reRender() {
 
-			//console.log('d',d);
-			//console.log('events:',events);
-			
-			return d.key 
-			
-			}) 
-	
-			svg.enter().append('circle')
-				.attr('class', 'item')
-				.attr('r', function(d) { 
-					console.log('d.r',d.r);
-					return d.r;
-				})
-				.attr('cx', function(d) { return x(d.x); })
-				.attr('cy', function(d) { return y(d.y);})
-				.style('fill', 'orange')
+      //console.log('events:',events); 
 
-			svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
-				.classed('exiting', true)
+      var svg = d3.select(svgElement).selectAll('circle')
+        .data(events, function (d) {
+
+          //console.log('d',d);
+          //console.log('events:',events);
+
+          return d.key
+
+        })
+
+      svg.enter().append('circle')
+        .attr('class', 'item')
+        .attr('r', function (d) {
+          console.log('d.r', d.r);
+          return d.r;
+        })
+        .attr('cx', function (d) { return x(d.x); })
+        .attr('cy', function (d) { return y(d.y); })
+        .style('fill', 'orange')
+
+      svg.exit().filter(':not(.exiting)') // Don't select already exiting nodes
+        .classed('exiting', true)
         .transition().duration(500)
-        .style('opacity',0)
-				.remove()
+        .style('opacity', 0)
+        .remove()
 
-		} 
-	 	
-		// Get unconfirmed transactions
+    }
 
-    var websocket = this.props.websocket; 
-		var svgElement = this.myRef.current; 
+    // Get unconfirmed transactions
 
-    websocket.onopen = function(evt) { 
+    var websocket = this.props.websocket;
+    var svgElement = this.myRef.current;
 
-      websocket.onmessage = function(evt) { 
-				var info = JSON.parse(evt.data);
+    websocket.onopen = function (evt) {
 
-				var valueSum = 0;
+      websocket.onmessage = function (evt) {
+        var info = JSON.parse(evt.data);
 
-				for (var valueObj of info.outs) {
-					valueSum+=valueObj.value;
-				};
+        var valueSum = 0;
 
-				console.log('valueSum',valueSum); 
+        for (var valueObj of info.outs) {
+          valueSum += valueObj.value;
+        };
 
-			function getDateNow(event) { 
-					return event.key === dateNow;
-			}
+        console.log('valueSum', valueSum);
 
-			var dateNow = Date.now();
+        function getDateNow(event) {
+          return event.key === dateNow;
+        }
 
-			events.push({key: dateNow, x: Math.random(), y: Math.random(), r: valueSum/10000000}); 
+        var dateNow = Date.now();
+
+        events.push({ key: dateNow, x: Math.random(), y: Math.random(), r: valueSum / 10000000 });
 
 
-			reRender();
+        reRender();
 
-				var eventIndex = events.findIndex(getDateNow); 
-				events.splice(eventIndex,1); 
-						
-			reRender();
+        var eventIndex = events.findIndex(getDateNow);
+        events.splice(eventIndex, 1);
 
-      } 
-    }; 
-		
-  } 
+        reRender();
+
+      }
+    };
+
+  }
 
   render() {
-    return  (
+    return (
       <div>
-				<svg ref={this.myRef} width={window.innerWidth} height={window.innerHeight} ></svg>
-			</div> 
-    ) 
-  } 
+        <svg ref={this.myRef} width={window.innerWidth} height={window.innerHeight} ></svg>
+      </div>
+    )
+  }
 }
 
 
