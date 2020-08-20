@@ -7,13 +7,13 @@ var websocket = new WebSocket(wsUri);
 
 class App extends Component {
 
-	render() { 
-		return (
-			<div>
-				{/*<Circles websocket={websocket} />*/}
-				<LineChart />
-			</div>
-		);
+  render() { 
+    return (
+      <div>
+        {/*<Circles websocket={websocket} />*/}
+        <LineChart />
+      </div>
+    );
   }
 }
 
