@@ -86,7 +86,7 @@ class LineChart extends Component {
   render() {
     return (
       <div>
-        Line Chart
+        {/*<!--Line Chart-->*/}
       </div>
     )
   }

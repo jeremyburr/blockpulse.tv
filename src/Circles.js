@@ -72,7 +72,8 @@ class Circles extends Component {
           valueSum += valueObj.value;
         };
 
-        console.log('valueSum', valueSum);
+        console.log(evt.data);
+        //console.log('valueSum', valueSum);
 
         function getDateNow(event) {
           return event.key === dateNow;
