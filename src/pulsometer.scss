@@ -1,0 +1,18 @@
+    .dot {
+
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        display: inline-block; 
+        border: solid 1px #FFF;
+
+        &.on {
+          background-color: #FFF;
+        }
+
+        &.off {
+          background-color: transparent;
+        }
+
+    }
+

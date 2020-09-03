@@ -1,45 +1,48 @@
 import React, { Component } from 'react';
+import "./pulsometer.scss";
 
 let isActive = false;
 
 class Pulsometer extends Component  {
 
-  componentDidMount() { 
-
-    var websocket = this.props.websocket;
-
-    websocket.onopen = function(evt) {
-
-      websocket.onmessage = function(evt) {
-
-        console.log(evt.data);
-
-        isActive 
-
-      }
-
+  constructor() {
+    super();
+    this.state = {
+      dotActive: false
     }
+  } 
+
+  pulseDot = () => {
 
   }
 
-  render() {
+  configureWebSocket = () => { 
 
-    const dotStyles = {
+    var websocket = this.props.websocket;
 
-        height: "25px",
-        width: "25px",
-        backgroundColor: "#bbb",
-        borderRadius: "50%",
-        display: "inline-block" 
-
+    websocket.onopen = (evt) => { 
+      websocket.onmessage = (evt) => { 
+        console.log(this); 
+        //this.setState({dotActive: true}) 
+        this.pulseDot();
+      } 
     }
 
+  } 
+
+  componentDidMount() {
+    this.configureWebSocket();
+  }
+
+  render() { 
+
+    const dotActive = this.state.dotActive;
 
     return (
       <div>
         <div>Pulsometer</div>
         <br />
-        <div className={isActive ? "on" : "off"} style={dotStyles} />
+        <div className={`dot ${dotActive ? "on" : "off"}`} />
       </div>
     )
   }
