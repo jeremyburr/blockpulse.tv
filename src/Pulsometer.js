@@ -13,13 +13,19 @@ class Pulsometer extends Component  {
 
   timeLoop = () => {
     setInterval(function(){
-      console.log('second');
+      //console.log('second');
     },1000) 
   }
 
   pulseDot = () => {
     this.setState({pulse: true}); 
-  }
+    setTimeout( () => {
+      this.setState({pulse: false})
+    },1)
+    //this.setState({pulse: false}); 
+    //this.setState({pulse: true}, () => this.setState({pulse:false})); 
+    //this.setState({pulse: true}, this.setState({pulse: false})); 
+  } 
 
   configureWebSocket = () => { 
 
@@ -27,6 +33,7 @@ class Pulsometer extends Component  {
 
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
+        console.log('event');
         //console.log(this); 
         //this.setState({pulse: true}) 
         this.pulseDot();
@@ -41,7 +48,8 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() {
-    console.log('updated');
+    //if (this.state.pulse) this.setState({pulse:false});
+    //console.log(this.state.pulse);
   }
 
   render() { 
