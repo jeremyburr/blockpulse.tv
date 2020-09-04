@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Circles from './Circles.js';
-import LineChart from './LineChart.js';
+//import Circles from './Circles.js';
+//import LineChart from './LineChart.js';
 import Header from './Header.js';
 import Pulsometer from './Pulsometer.js';
 

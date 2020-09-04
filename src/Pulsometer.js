@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
-
-let isActive = false;
+import PulseDot from "./PulseDot.js";
 
 class Pulsometer extends Component  {
 
   constructor() {
     super();
     this.state = {
-      dotActive: false
+      pulse: false
     }
   } 
 
@@ -19,7 +18,7 @@ class Pulsometer extends Component  {
   }
 
   pulseDot = () => {
-    this.setState({dotActive: true}); 
+    this.setState({pulse: true}); 
   }
 
   configureWebSocket = () => { 
@@ -29,7 +28,7 @@ class Pulsometer extends Component  {
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
         //console.log(this); 
-        //this.setState({dotActive: true}) 
+        //this.setState({pulse: true}) 
         this.pulseDot();
       } 
     }
@@ -41,21 +40,24 @@ class Pulsometer extends Component  {
     this.timeLoop();
   }
 
-  render() { 
+  componentDidUpdate() {
+    console.log('updated');
+  }
 
-    const dotActive = this.state.dotActive;
+  render() { 
 
     return (
       <div>
         <div>Pulsometer</div>
         <br />
         <div className="dots"  >
-          <div className={`dot ${dotActive ? "on" : "off"}`} />
-          <div className={`dot ${dotActive ? "on" : "off"}`} />
-          <div className={`dot ${dotActive ? "on" : "off"}`} />
-          <div className={`dot ${dotActive ? "on" : "off"}`} />
-          <div className={`dot ${dotActive ? "on" : "off"}`} />
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
         </div>
+        <PulseDot pulse={this.state.pulse} />
       </div>
     )
   }
