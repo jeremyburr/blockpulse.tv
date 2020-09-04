@@ -1,10 +1,20 @@
+.dots {
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
     .dot {
 
         height: 25px;
         width: 25px;
         border-radius: 50%;
-        display: inline-block; 
         border: solid 1px #FFF;
+        margin-bottom: 1rem;
+        display: flex; 
+
 
         &.on {
           background-color: #FFF;
@@ -15,4 +25,6 @@
         }
 
     }
+
+}
 

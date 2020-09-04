@@ -12,8 +12,14 @@ class Pulsometer extends Component  {
     }
   } 
 
-  pulseDot = () => {
+  timeLoop = () => {
+    setInterval(function(){
+      console.log('second');
+    },1000) 
+  }
 
+  pulseDot = () => {
+    this.setState({dotActive: true}); 
   }
 
   configureWebSocket = () => { 
@@ -22,7 +28,7 @@ class Pulsometer extends Component  {
 
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
-        console.log(this); 
+        //console.log(this); 
         //this.setState({dotActive: true}) 
         this.pulseDot();
       } 
@@ -32,6 +38,7 @@ class Pulsometer extends Component  {
 
   componentDidMount() {
     this.configureWebSocket();
+    this.timeLoop();
   }
 
   render() { 
@@ -42,7 +49,13 @@ class Pulsometer extends Component  {
       <div>
         <div>Pulsometer</div>
         <br />
-        <div className={`dot ${dotActive ? "on" : "off"}`} />
+        <div className="dots"  >
+          <div className={`dot ${dotActive ? "on" : "off"}`} />
+          <div className={`dot ${dotActive ? "on" : "off"}`} />
+          <div className={`dot ${dotActive ? "on" : "off"}`} />
+          <div className={`dot ${dotActive ? "on" : "off"}`} />
+          <div className={`dot ${dotActive ? "on" : "off"}`} />
+        </div>
       </div>
     )
   }
