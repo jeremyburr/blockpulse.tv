@@ -1,2 +1,1 @@
-Experimenting with live visualizations of the Bitcoin network, using React and D3.
-(Under Development...)
+Experimenting with realtime network visualizations using React, D3, and websockets. (Under Development)
