@@ -22,9 +22,6 @@ class Pulsometer extends Component  {
     setTimeout( () => {
       this.setState({pulse: false})
     },1)
-    //this.setState({pulse: false}); 
-    //this.setState({pulse: true}, () => this.setState({pulse:false})); 
-    //this.setState({pulse: true}, this.setState({pulse: false})); 
   } 
 
   configureWebSocket = () => { 
@@ -56,17 +53,30 @@ class Pulsometer extends Component  {
   render() { 
 
     return (
-      <div className="pulsedot">
-        {/*<div>Pulsometer</div>
-        <br />
-        <div className="dots"  >
-          <div className="dot" />
-          <div className="dot" />
-          <div className="dot" />
-          <div className="dot" />
-          <div className="dot" />
-        </div>*/}
-        <PulseDot pulse={this.state.pulse} />
+    
+      <div>
+      <div className="pulsometer">
+        <div className="antenna"/>
+        Bitcoin Raw TX <br />Pulsometer
+        {/*BlockPulse.TV*/}
+      </div> 
+        <div className="pulsedot">
+          {/*<div>Pulsometer</div>
+          <br />
+          <div className="dots"  >
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
+          </div>*/}
+          <PulseDot pulse={this.state.pulse} />
+        </div>
+        
+        <div>
+          <div className={`dot ${this.props.pulse ? "on" : "off"}`} />
+        </div>
+
       </div>
     )
   }

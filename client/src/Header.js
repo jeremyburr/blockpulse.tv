@@ -6,10 +6,7 @@ class Header extends Component {
   render() {
 
     return (
-     <div className="pulsometer">
-       <div className="antenna"/>
-       Bitcoin Raw TX <br />Pulsometer
-       {/*BlockPulse.TV*/}
+     <div>
      </div> 
     )
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./pulsometer.scss";
 
 class PulseDot extends Component  {
 
@@ -18,9 +17,8 @@ class PulseDot extends Component  {
 
   render() {
     return (
-      <div>
-        <div className={`dot ${this.props.pulse ? "on" : "off"}`} />
-      </div>
+      <div></div>
+      
     )
   }
 

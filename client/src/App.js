@@ -11,11 +11,8 @@ class App extends Component {
 
   render() { 
     return (
-      <div className="app-container">
-        {/*<Circles websocket={websocket} />*/}
-        <Header />
+      <div className="app">
         <Pulsometer websocket={websocket} />
-        {/*<LineChart />*/}
       </div>
     )
   }
