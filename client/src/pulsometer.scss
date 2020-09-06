@@ -1,3 +1,13 @@
+html {height: 100%;}
+body {height: 100%;}
+#root {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+}
+
 .dots {
 
     width: 100%;
@@ -29,14 +39,15 @@
 }
 
 .pulsedot {
-  margin-top: 5rem;
+  //margin-top: 5rem;
   width: 100%;
+  height: 100%;
   display: flex;
-  //align-items: center;
+  align-items: center;
   justify-content: center;
   .dot {
-        height: 25px;
-        width: 25px;
+        height: 10px;
+        width: 10px;
         border-radius: 50%;
         border: solid 1px #FFF;
         margin-bottom: 1rem;
@@ -52,5 +63,29 @@
         }
 
   }
+}
+
+.pulsometer { 
+border: solid white 1px;
+text-align: center;
+padding-top: 1rem;
+font-size: 1.5rem;
+position: fixed;
+bottom: 0;
+text-align: center;
+width: 50%;
+margin-left: 25%;
+height: 10rem;
+
+  .antenna {
+    width: 1px;
+    height: 14.5rem;
+    position: absolute;
+    bottom: 11rem;
+    background-color: #FFF;
+    margin-left: 49%;
+
+  }
+
 }
 

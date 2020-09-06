@@ -81,8 +81,7 @@ class Circles extends Component {
 
         var dateNow = Date.now();
 
-        events.push({ key: dateNow, x: Math.random(), y: Math.random(), r: valueSum / 10000000 });
-
+        events.push({ key: dateNow, x: Math.random(), y: Math.random(), r: valueSum / 10000000 }); 
 
         reRender();
 

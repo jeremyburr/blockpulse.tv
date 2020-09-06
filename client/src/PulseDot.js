@@ -18,7 +18,7 @@ class PulseDot extends Component  {
 
   render() {
     return (
-      <div className="pulsedot">
+      <div>
         <div className={`dot ${this.props.pulse ? "on" : "off"}`} />
       </div>
     )

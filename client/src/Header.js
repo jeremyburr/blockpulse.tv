@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import { forceCenter } from 'd3';
 
 class Header extends Component {
 
   render() {
 
-    const styles = { 
-      textAlign: "center",
-      paddingTop: "1rem",
-      fontSize: "1.5rem"
-    }
-
     return (
-     <div style={styles}>
-       BlockPulse.TV
+     <div className="pulsometer">
+       <div className="antenna"/>
+       Bitcoin Raw TX <br />Pulsometer
+       {/*BlockPulse.TV*/}
      </div> 
     )
 

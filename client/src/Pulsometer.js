@@ -33,7 +33,8 @@ class Pulsometer extends Component  {
 
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
-        console.log('event');
+        //console.log('event');
+        console.log(JSON.parse(evt.data));
         //console.log(this); 
         //this.setState({pulse: true}) 
         this.pulseDot();
@@ -55,8 +56,8 @@ class Pulsometer extends Component  {
   render() { 
 
     return (
-      <div>
-        <div>Pulsometer</div>
+      <div className="pulsedot">
+        {/*<div>Pulsometer</div>
         <br />
         <div className="dots"  >
           <div className="dot" />
@@ -64,7 +65,7 @@ class Pulsometer extends Component  {
           <div className="dot" />
           <div className="dot" />
           <div className="dot" />
-        </div>
+        </div>*/}
         <PulseDot pulse={this.state.pulse} />
       </div>
     )
