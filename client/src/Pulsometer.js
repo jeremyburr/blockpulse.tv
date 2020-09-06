@@ -54,11 +54,14 @@ class Pulsometer extends Component  {
 
     return (
     
-      <div class="container-pulsometer">
+      <div className="container-pulsometer">
         <div className="pulsometer">
-          <div className="antenna"/>
-          Bitcoin Raw TX <br />Pulsometer
-          {/*BlockPulse.TV*/}
+          <div className="antenna" />
+
+          <div class="header">
+            Raw TX Pulsometer
+          </div> 
+
         </div> 
         <div className="pulsedot">
           {/*<div>Pulsometer</div>
@@ -70,10 +73,9 @@ class Pulsometer extends Component  {
             <div className="dot" />
             <div className="dot" />
           </div>*/}
-          <PulseDot pulse={this.state.pulse} />
         </div> 
         <div>
-          <div className={`dot ${this.props.pulse ? "on" : "off"}`} />
+          <div className={`pulse ${this.props.pulse ? "on" : "off"}`} />
         </div> 
       </div>
     )
