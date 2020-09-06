@@ -36,6 +36,18 @@ html, body, #root, .app {
         margin-left: 49%;
         top: -14.5rem; 
       }
+
+      .bulb {
+        position: absolute;
+        top: 0;
+        height: 10px;
+        width: 10px;
+        margin-left: -5px;
+        margin-top: -5px;
+        border-radius: 50%;
+        background-color: #FFF;
+
+      }
       
       .dot {
           position: absolute;

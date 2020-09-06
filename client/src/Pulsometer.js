@@ -56,9 +56,10 @@ class Pulsometer extends Component  {
     
       <div className="container-pulsometer">
         <div className="pulsometer">
-          <div className="antenna" />
-
-          <div class="header">
+          <div className="antenna" >
+            <div className="bulb" /> 
+          </div>
+          <div className="header">
             Raw TX Pulsometer
           </div> 
 
