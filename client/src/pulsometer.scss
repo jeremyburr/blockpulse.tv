@@ -48,6 +48,23 @@ html, body, #root, .app {
         background-color: #FFF;
 
       }
+
+      .beam {
+        position: absolute;
+        top: -12rem;
+        margin-left: 36.5%; 
+
+        path {
+          stroke:#FCCA03; 
+          animation: hideshow 5s ease infinite;
+
+          @keyframes hideshow {
+            from { stroke-width:.5; }
+            to { stroke-width:.1; }
+          }
+
+        }
+      }
       
       .dot {
           position: absolute;
