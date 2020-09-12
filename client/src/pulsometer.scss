@@ -29,11 +29,14 @@ html, body, #root, .app {
     } 
 
     svg.lightning-bolt {
-      width: 600px;
-      height: 600px;
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      top: -43px;
+      left: -30px;
+      
       
       path {
-        position: absolute;
         fill: orange;
         stroke: none;
       }
