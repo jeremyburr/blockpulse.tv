@@ -27,6 +27,17 @@ html, body, #root, .app {
       font-size: 1.5rem;
 
     } 
+
+    svg.lightning-bolt {
+      width: 600px;
+      height: 600px;
+      
+      path {
+        position: absolute;
+        fill: orange;
+        stroke: none;
+      }
+    }
       .antenna {
         width: 1px;
         height: 6rem;

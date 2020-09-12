@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
 import PulseDot from "./PulseDot.js";
+import LightningBolt from "./LightningBolt.js";
 
 class Pulsometer extends Component  {
 
@@ -57,7 +58,9 @@ class Pulsometer extends Component  {
       <div className="container-pulsometer">
         <div className="pulsometer">
           <div className="antenna" >
-            <div className="bulb" /> 
+            <div className="bulb" > 
+              <LightningBolt /> 
+            </div>
           </div>
           <div className="header">
             Raw TX Pulsometer
