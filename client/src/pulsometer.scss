@@ -32,14 +32,21 @@ html, body, #root, .app {
       width: 400px;
       height: 400px;
       position: absolute;
-      top: -43px;
-      left: -30px;
+      top: -101px;
+      left: -66px;
       
       
       path {
         fill: orange;
         stroke: none;
       }
+      animation: hideshow 5s ease infinite;
+
+      @keyframes hideshow {
+        from { top: 0px; }
+        to { top: -500px;}
+      }
+
     }
       .antenna {
         width: 1px;
