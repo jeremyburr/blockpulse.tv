@@ -18,7 +18,7 @@ html, body, #root, .app {
     border: solid white 1px;
     position: absolute;
     width: 1200px; 
-    height: 650px;
+    height: 450px;
     bottom: 0;
 
     .header {
@@ -58,6 +58,23 @@ html, body, #root, .app {
         border-radius: 50%;
         background-color: #FFF;
 
+      }
+
+      .beam {
+        position: absolute;
+        top: -12rem;
+        margin-left: 36.5%; 
+
+        path {
+          stroke:#FCCA03; 
+          animation: hideshow 5s ease infinite;
+
+          @keyframes hideshow {
+            from { stroke-width:.5; }
+            to { stroke-width:.1; }
+          }
+
+        }
       }
       
       .dot {
