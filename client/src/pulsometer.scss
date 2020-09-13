@@ -29,36 +29,51 @@ html, body, #root, .app {
     } 
 
     svg.lightning-bolt {
-      width: 400px;
+      width: 800px;
       height: 520px;
       position: absolute;
-      top: -386px;
-      left: -48px; 
+      top: -424px;
+      left: -375px; 
+      border: solid;
       
       path  {
         fill: #fff56b;
         stroke: none; 
-        transform: translate(-.5px,194px); 
+        //transform: translate(500px,194px); 
 
         &.bolt-0 {
           animation: bolt-0 .75s ease infinite; 
           @keyframes bolt-0 {
-            from { transform: translateY(194px) }
-            to { transform: translateY(-100px)}
+            from { transform: translate(143px,270px) }
+            to { transform: translate(143px,0px)}
           } 
         }
         &.bolt-1 {
           animation: bolt-1 .75s ease infinite; 
           @keyframes bolt-1 {
-            from { transform: translate(0px,194px) }
-            to { transform: translate(-50px,-50px)}
+            from { transform: translate(143px,270px) }
+            to { transform: translate(113px,25px)}
           } 
         }
         &.bolt-2 {
           animation: bolt-2 .75s ease infinite; 
           @keyframes bolt-2 {
-            from { transform: translate(0px,194px) }
-            to { transform: translate(50px,50px)}
+            from { transform: translate(143px,270px) }
+            to { transform: translate(173px,25px)}
+          } 
+        } 
+        &.bolt-3 {
+          animation: bolt-3 .75s ease infinite; 
+          @keyframes bolt-3 {
+            from { transform: translate(143px,270px) }
+            to { transform: translate(83px,50px)}
+          } 
+        }
+        &.bolt-4 {
+          animation: bolt-4 .75s ease infinite; 
+          @keyframes bolt-4 {
+            from { transform: translate(143px,270px) }
+            to { transform: translate(203px,50px)}
           } 
         }
 

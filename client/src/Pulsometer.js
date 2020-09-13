@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
-import PulseDot from "./PulseDot.js";
+//import PulseDot from "./PulseDot.js";
 import LightningBolt from "./LightningBolt.js";
 
 class Pulsometer extends Component  {
