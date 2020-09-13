@@ -35,19 +35,34 @@ html, body, #root, .app {
       top: -386px;
       left: -48px; 
       
-      path {
-        fill: orange;
+      path  {
+        fill: #fff56b;
         stroke: none; 
-        transform: translate(-.5px,194px);
+        transform: translate(-.5px,194px); 
 
-        animation: hideshow .75s ease infinite;
-
-        @keyframes hideshow {
-          from { transform: translateY(194px) }
-          to { transform: translateY(-100px)}
+        &.bolt-0 {
+          animation: bolt-0 .75s ease infinite; 
+          @keyframes bolt-0 {
+            from { transform: translateY(194px) }
+            to { transform: translateY(-100px)}
+          } 
+        }
+        &.bolt-1 {
+          animation: bolt-1 .75s ease infinite; 
+          @keyframes bolt-1 {
+            from { transform: translate(0px,194px) }
+            to { transform: translate(-50px,-50px)}
+          } 
+        }
+        &.bolt-2 {
+          animation: bolt-2 .75s ease infinite; 
+          @keyframes bolt-2 {
+            from { transform: translate(0px,194px) }
+            to { transform: translate(50px,50px)}
+          } 
         }
 
-      }
+    }
 
       
 
