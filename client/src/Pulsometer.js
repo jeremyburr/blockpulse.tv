@@ -62,31 +62,9 @@ class Pulsometer extends Component  {
           <div className="header">
             Raw TX Pulsometer
           </div> 
-            {/*<svg className="beam" width="300" height="300"> 
-            <path d="M100,100 a1,1 0 0,1 100,0" stroke="orange" fill="none" /> 
-            <animateTransform attributeType="xml" 
-                attributeName="transform" 
-                type="scale"
-                dur='5s'
-                values="1;6"
-                repeatCount="indefinite"
-    additive="sum"/>
-    </svg>*/}
-        </div> 
-        
-        <div className="pulsedot">
-          {/*<div>Pulsometer</div>
-          <br />
-          <div className="dots"  >
-            <div className="dot" />
-            <div className="dot" />
-            <div className="dot" />
-            <div className="dot" />
-            <div className="dot" />
-          </div>*/}
         </div> 
         <div>
-          <div className={`pulse ${this.props.pulse ? "on" : "off"}`} />
+          {/*<div className={`pulse ${this.props.pulse ? "on" : "off"}`} />*/}
         </div> 
       </div>
     )
