@@ -26,6 +26,36 @@ class LightningBolt extends Component  {
     path_4.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
     path_4.setAttribute("class","bolt-4");
     svg.appendChild(path_4);
+    
+    let path_5 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_5.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_5.setAttribute("class","bolt-5");
+    svg.appendChild(path_5);
+    
+    let path_6 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_6.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_6.setAttribute("class","bolt-6");
+    svg.appendChild(path_6);
+    
+    let path_7 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_7.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_7.setAttribute("class","bolt-7");
+    svg.appendChild(path_7);
+    
+    let path_8 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_8.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_8.setAttribute("class","bolt-8");
+    svg.appendChild(path_8);
+    
+    let path_9 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_9.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_9.setAttribute("class","bolt-9");
+    svg.appendChild(path_9);
+    
+    let path_10 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path_10.setAttribute("d", "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 ");
+    path_10.setAttribute("class","bolt-10");
+    svg.appendChild(path_10);
 
   }
 
