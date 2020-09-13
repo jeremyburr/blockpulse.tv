@@ -44,36 +44,37 @@ html, body, #root, .app {
         &.bolt-0 {
           animation: bolt-0 .75s ease infinite; 
           @keyframes bolt-0 {
-            from { transform: translate(143px,270px) }
+            from { transform: translate(143px,270px)}
             to { transform: translate(143px,0px)}
           } 
         }
         &.bolt-1 {
           animation: bolt-1 .75s ease infinite; 
           @keyframes bolt-1 {
-            from { transform: translate(143px,270px) }
-            to { transform: translate(113px,25px)}
+            from { transform: translate(143px,270px)}
+            to { transform: translate(113px,25px) rotate(-15deg)}
           } 
         }
         &.bolt-2 {
+          transform: scaleX(-1);
           animation: bolt-2 .75s ease infinite; 
           @keyframes bolt-2 {
-            from { transform: translate(143px,270px) }
-            to { transform: translate(173px,25px)}
+            from { transform: translate(143px,270px)}
+            to { transform: translate(173px,8px)rotate(15deg)}
           } 
         } 
         &.bolt-3 {
           animation: bolt-3 .75s ease infinite; 
           @keyframes bolt-3 {
-            from { transform: translate(143px,270px) }
-            to { transform: translate(83px,50px)}
+            from { transform: translate(143px,270px)}
+            to { transform: translate(83px,50px) rotate(-35deg)}
           } 
         }
         &.bolt-4 {
           animation: bolt-4 .75s ease infinite; 
           @keyframes bolt-4 {
             from { transform: translate(143px,270px) }
-            to { transform: translate(203px,50px)}
+            to { transform: translate(210px,10px) rotate(35deg)}
           } 
         }
 
