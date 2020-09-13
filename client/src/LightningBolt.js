@@ -6,7 +6,7 @@ class LightningBolt extends Component  {
 render() {
 
   return (
-    <svg viewBox="0 0 225 225" className="lightning-bolt"> 
+    <svg viewBox="0 0 275 275" className="lightning-bolt"> 
       <path d="M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 "/>
     </svg>
   )

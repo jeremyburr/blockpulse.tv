@@ -33,17 +33,17 @@ html, body, #root, .app {
       height: 520px;
       position: absolute;
       top: -422px;
-      left: -66px; 
+      left: -53px; 
       
       path {
         fill: orange;
         stroke: none; 
-        transform: translate(-.5px,154px);
+        transform: translate(-.5px,194px);
 
         animation: hideshow 1s ease infinite;
 
         @keyframes hideshow {
-          from { transform: translateY(154px) }
+          from { transform: translateY(194px) }
           to { transform: translateY(-100px)}
         }
 
