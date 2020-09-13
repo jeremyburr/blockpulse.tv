@@ -30,22 +30,26 @@ html, body, #root, .app {
 
     svg.lightning-bolt {
       width: 400px;
-      height: 400px;
+      height: 520px;
       position: absolute;
-      top: -101px;
-      left: -66px;
-      
+      top: -422px;
+      left: -66px; 
       
       path {
         fill: orange;
-        stroke: none;
-      }
-      animation: hideshow 5s ease infinite;
+        stroke: none; 
+        transform: translate(-.5px,154px);
 
-      @keyframes hideshow {
-        from { top: 0px; }
-        to { top: -500px;}
+        animation: hideshow 1s ease infinite;
+
+        @keyframes hideshow {
+          from { transform: translateY(154px) }
+          to { transform: translateY(-100px)}
+        }
+
       }
+
+      
 
     }
       .antenna {
@@ -75,7 +79,7 @@ html, body, #root, .app {
         top: -12rem;
         margin-left: 36.5%; 
 
-        path {
+        /*path {
           stroke:#FCCA03; 
           animation: hideshow 5s ease infinite;
 
@@ -84,7 +88,7 @@ html, body, #root, .app {
             to { stroke-width:.1; }
           }
 
-        }
+        }*/
       }
       
       .dot {
