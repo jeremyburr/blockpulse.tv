@@ -10,17 +10,7 @@ class Pulsometer extends Component  {
     super();
     this.state = {
       eventCount: 0,
-      bolt_0: "off",
-      bolt_1: "off",
-      bolt_2: "off",
-      bolt_3: "off",
-      bolt_4: "off",
-      bolt_5: "off",
-      bolt_6: "off",
-      bolt_7: "off",
-      bolt_8: "off",
-      bolt_9: "off",
-      bolt_10: "off",
+      activeBolts: [false,false,false,false,false,false,false,false,false,false,false]
     }
   } 
 
@@ -54,27 +44,28 @@ class Pulsometer extends Component  {
 
   componentDidUpdate() { 
 
-
     if (this.state.eventCount > 0) {
 
-      for (let i=0; i<this.state.eventCount; i++) { 
+      /*for (let i=0; i<this.state.eventCount; i++) { 
 
+        console.log("activebolts[i]",this.state.activeBolts[i]); 
 
-        
-        //console.log(this.state.bolt)
+        if (!this.state.activeBolts[i]) {
+          $(".bolt-"+i).css("animation-name", "bolt-"+i);
+          this.setState({activeBolts:this.state.activeBolts[i]=true});
 
+          setTimeout(function(){ 
+            $(".bolt-"+i).css("animation-name", "none"); 
+            this.setState({activeBolts:this.state.activeBolts[i]=false});
 
-      }
+          },750)
+        } 
+
+      }*/
 
     }
 
     console.log(this.state.eventCount); 
-
-    $(".bolt-0").css("animation-name", "none");
-
-    setTimeout(function(){ 
-      $(".bolt-0").css("animation-name", "bolt-0"); 
-    })
 
 
   }
