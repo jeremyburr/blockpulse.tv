@@ -24,6 +24,7 @@ class Pulsometer extends Component  {
     super();
     this.state = {
       eventCount: 0,
+      boltsActive: 0,
       lightningBolts: initialBolts
     }
   } 
@@ -34,8 +35,39 @@ class Pulsometer extends Component  {
     },1000) 
   }
 
-  addEvent = () => {
+  addEvent = () => { 
+
+    if (this.state.boltsActive < 10) {
+
+      const inactiveBolt = this.state.lightningBolts.find(bolt => !bolt.active);
+
+      if (inactiveBolt !== undefined) { 
+
+        const position = inactiveBolt.position;
+
+        console.log(position); 
+
+        const updatedLightningBolts = this.state.lightningBolts.map(bolt => {
+          return bolt; 
+        })
+
+        this.setState({
+          
+          lightningBolts: updatedLightningBolts
+        
+        })
+
+
+      }
+
+
+    }
+
+    var eventCount = this.state.eventCount;
+    console.log(eventCount); 
+
     this.setState({eventCount: this.state.eventCount+=1}); 
+
   } 
 
   configureWebSocket = () => { 
@@ -57,7 +89,7 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    console.log(this.state.eventCount); 
+    //console.log(this.state.eventCount); 
   }
 
   render() { 
@@ -76,7 +108,6 @@ class Pulsometer extends Component  {
           </div> 
         </div> 
         <div>
-          {/*<div className={`pulse ${this.props.pulse ? "on" : "off"}`} />*/}
         </div> 
       </div>
     )

@@ -6,12 +6,14 @@ class LightningBolts extends Component  {
   render() { 
 
     let dValues = "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5" 
+    let viewBox = "0 0 400 400";
 
-    console.log(this.props.bolts)
+    //console.log(this.props.bolts)
+
     return (
-      <svg id="svg-lightning-bolt" viewBox="0 0 400 400" className="lightning-bolt"> 
+      <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.props.bolts.map(bolt => (
-          <path key={bolt.position} className={`bolt-${bolt.position}`} d={dValues} /> 
+          <path key={bolt.position} className={`bolt-${bolt.position} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
         ))} 
       </svg>
     ) 
