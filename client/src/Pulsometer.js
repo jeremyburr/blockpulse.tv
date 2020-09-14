@@ -57,31 +57,7 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-
-    if (this.state.eventCount > 0) {
-
-      /*for (let i=0; i<this.state.eventCount; i++) { 
-
-        console.log("activebolts[i]",this.state.lightningBolts[i]); 
-
-        if (!this.state.lightningBolts[i]) {
-          $(".bolt-"+i).css("animation-name", "bolt-"+i);
-          this.setState({lightningBolts:this.state.activeBolts[i]=true});
-
-          setTimeout(function(){ 
-            $(".bolt-"+i).css("animation-name", "none"); 
-            this.setState({lightningBolts:this.state.activeBolts[i]=false});
-
-          },750)
-        } 
-
-      }*/
-
-    }
-
     console.log(this.state.eventCount); 
-
-
   }
 
   render() { 
