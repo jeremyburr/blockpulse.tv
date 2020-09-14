@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
-import LightningBolt from "./LightningBolt.js";
+import LightningBolts from "./LightningBolts.js";
 import $ from "jquery";
 
+  const initialBolts =  
+    [
+      {position: 0, active: false},
+      {position: 1, active: false},
+      {position: 2, active: false},
+      {position: 3, active: false},
+      {position: 4, active: false},
+      {position: 5, active: false},
+      {position: 6, active: false},
+      {position: 7, active: false},
+      {position: 8, active: false},
+      {position: 9, active: false},
+      {position: 10, active: false} 
+    ]
 
 class Pulsometer extends Component  {
 
@@ -10,7 +24,7 @@ class Pulsometer extends Component  {
     super();
     this.state = {
       eventCount: 0,
-      activeBolts: [false,false,false,false,false,false,false,false,false,false,false]
+      lightningBolts: initialBolts
     }
   } 
 
@@ -48,15 +62,15 @@ class Pulsometer extends Component  {
 
       /*for (let i=0; i<this.state.eventCount; i++) { 
 
-        console.log("activebolts[i]",this.state.activeBolts[i]); 
+        console.log("activebolts[i]",this.state.lightningBolts[i]); 
 
-        if (!this.state.activeBolts[i]) {
+        if (!this.state.lightningBolts[i]) {
           $(".bolt-"+i).css("animation-name", "bolt-"+i);
-          this.setState({activeBolts:this.state.activeBolts[i]=true});
+          this.setState({lightningBolts:this.state.activeBolts[i]=true});
 
           setTimeout(function(){ 
             $(".bolt-"+i).css("animation-name", "none"); 
-            this.setState({activeBolts:this.state.activeBolts[i]=false});
+            this.setState({lightningBolts:this.state.activeBolts[i]=false});
 
           },750)
         } 
@@ -72,13 +86,14 @@ class Pulsometer extends Component  {
 
   render() { 
 
+
     return (
     
       <div className="container-pulsometer">
         <div className="pulsometer">
           <div className="antenna" >
             <div className="bulb" > 
-              <LightningBolt /> 
+              <LightningBolts bolts={this.state.lightningBolts} /> 
             </div>
           </div>
           <div className="header">

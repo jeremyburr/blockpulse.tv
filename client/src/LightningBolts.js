@@ -61,9 +61,16 @@ class LightningBolt extends Component  {
 
 render() { 
 
+    console.log(this.props.bolts)
   return (
     <svg id="svg-lightning-bolt" viewBox="0 0 400 400" className="lightning-bolt"> 
+      {this.props.bolts.map(bolt => (
+        <path key={bolt.position} className={`bolt-${bolt.position}`} /> 
+      ))}
       <path className="bolt-0" d="M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 "/>
+      {/*<path className="bolt-1" d="M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 "/>
+      <path className="bolt-2" d="M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 "/>
+      <path className="bolt-3" d="M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5 "/>*/}
     </svg>
   ) 
 
