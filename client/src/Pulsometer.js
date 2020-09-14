@@ -62,7 +62,6 @@ class Pulsometer extends Component  {
 
   render() { 
 
-
     return (
     
       <div className="container-pulsometer">
