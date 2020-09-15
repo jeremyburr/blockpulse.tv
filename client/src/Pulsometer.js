@@ -36,50 +36,26 @@ class Pulsometer extends Component  {
   }
 
   addEvent = () => { 
-
-    if (this.state.boltsActive < 11) {
-
-      const inactiveBolt = this.state.lightningBolts.find(bolt => {
-
-        console.log('bolt',bolt);
-        
-        return bolt.active === false
-        
-       });
-
-      //console.log(inactiveBolt);
+    if (this.state.boltsActive < 11) { 
+      const inactiveBolt = this.state.lightningBolts.find(bolt => { 
+        return bolt.active === false 
+      }); 
 
       if (inactiveBolt !== undefined) { 
-
-        const position = inactiveBolt.position;
-
-        //console.log(position); 
-
-        const updatedLightningBolts = this.state.lightningBolts.map(bolt => {
-          //console.log('bolt position',bolt.position);
-
+        const position = inactiveBolt.position; 
+        const updatedLightningBolts = this.state.lightningBolts.map(bolt => { 
           if (bolt.position === position) { 
-            
-            console.log('matches: ',bolt.position)
-            bolt.active = true;
-          
-          }
+            bolt.active = true; 
+          } 
           return bolt; 
-        })
-        
-
+        }) 
         this.setState({ 
           lightningBolts: updatedLightningBolts,
           boltsActive: this.state.boltsActive + 1,
           eventCount: this.state.eventCount + 1
-        })
-
-
-      }
-
-
+        }) 
+      } 
     } 
-
   } 
 
   configureWebSocket = () => { 
