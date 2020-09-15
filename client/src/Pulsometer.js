@@ -39,34 +39,42 @@ class Pulsometer extends Component  {
 
     if (this.state.boltsActive < 10) {
 
-      const inactiveBolt = this.state.lightningBolts.find(bolt => !bolt.active);
+      const inactiveBolt = this.state.lightningBolts.find(bolt => {
+
+        console.log('bolt',bolt);
+        
+        return bolt.active === false
+        
+       });
+
+      //console.log(inactiveBolt);
 
       if (inactiveBolt !== undefined) { 
 
         const position = inactiveBolt.position;
 
-        console.log(position); 
+        //console.log(position); 
 
         const updatedLightningBolts = this.state.lightningBolts.map(bolt => {
+          //console.log('bolt position',bolt.position);
+
+          if (bolt.position === position) { console.log('matches: ',bolt.position)}
+          bolt.active = true;
           return bolt; 
         })
-
-        this.setState({
-          
-          lightningBolts: updatedLightningBolts
         
+
+        this.setState({ 
+          lightningBolts: updatedLightningBolts,
+          boltsActive: this.state.boltsActive + 1,
+          eventCount: this.state.eventCount + 1
         })
 
 
       }
 
 
-    }
-
-    var eventCount = this.state.eventCount;
-    console.log(eventCount); 
-
-    this.setState({eventCount: this.state.eventCount+=1}); 
+    } 
 
   } 
 
