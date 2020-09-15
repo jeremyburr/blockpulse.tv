@@ -13,7 +13,7 @@ class LightningBolts extends Component  {
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.props.bolts.map(bolt => (
-          <path key={bolt.position} className={`bolt-${bolt.position} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
+          <path key={bolt.position} className={`bolt bolt-${bolt.position} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
         ))} 
       </svg>
     ) 

@@ -37,7 +37,7 @@ class Pulsometer extends Component  {
 
   addEvent = () => { 
 
-    if (this.state.boltsActive < 10) {
+    if (this.state.boltsActive < 11) {
 
       const inactiveBolt = this.state.lightningBolts.find(bolt => {
 
@@ -58,8 +58,12 @@ class Pulsometer extends Component  {
         const updatedLightningBolts = this.state.lightningBolts.map(bolt => {
           //console.log('bolt position',bolt.position);
 
-          if (bolt.position === position) { console.log('matches: ',bolt.position)}
-          bolt.active = true;
+          if (bolt.position === position) { 
+            
+            console.log('matches: ',bolt.position)
+            bolt.active = true;
+          
+          }
           return bolt; 
         })
         
