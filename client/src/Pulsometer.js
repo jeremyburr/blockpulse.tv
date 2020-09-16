@@ -66,9 +66,13 @@ class Pulsometer extends Component  {
           boltsActive: boltsActive,
           eventQue: eventQue
         }) 
-
+        console.log('boltsActive',boltsActive) 
       } 
     } 
+    else {
+      console.log('que');
+      this.setState({eventQue: this.state.eventQue++});
+    }
   } 
 
   configureWebSocket = () => { 
