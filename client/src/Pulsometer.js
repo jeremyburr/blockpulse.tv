@@ -23,57 +23,49 @@ class Pulsometer extends Component  {
   constructor() {
     super();
     this.state = {
-      eventCount: 0,
+      eventQue: 0,
       boltsActive: 0,
       lightningBolts: initialBolts
     }
   } 
 
-  timeLoop = () => {
-    setInterval(function(){
-      //console.log('second');
-    },1000) 
-  }
-
   addEvent = () => { 
+    
     if (this.state.boltsActive < 11) { 
       const inactiveBolt = this.state.lightningBolts.find(bolt => { 
         return bolt.active === false 
       }); 
 
+        let eventQue = this.state.eventQue;
+        let boltsActive = this.state.boltsActive;
+
       if (inactiveBolt !== undefined) { 
         const position = inactiveBolt.position; 
         const updatedLightningBolts = this.state.lightningBolts.map(bolt => { 
+
+        const currentTime = Date.now(); 
+        const boltTime = bolt.timestamp;
+
+        
           if (bolt.position === position) { 
             bolt.active = true; 
+            bolt.timestamp = Date.now(); 
+            boltsActive++;
+            eventQue++;
           } 
+          else if (currentTime - boltTime > 750) { 
+            bolt.timestamp = currentTime; 
+            bolt.active = false;
+            eventQue--;
+            boltsActive--;
+          }
           return bolt; 
         }) 
         this.setState({ 
           lightningBolts: updatedLightningBolts,
-          boltsActive: this.state.boltsActive + 1,
-          eventCount: this.state.eventCount + 1
-        },()=>{
-          setTimeout(() => { 
-            this.setState(state => ({ 
-              lightningBolts: state.lightningBolts.map(bolt => {
-                // console.log('bolt.position',bolt.position);
-                if (bolt.position === position) { 
-                  console.log('matches, position: ',bolt.position)
-                 // bolt.active = false; 
-                }
-                return bolt;
-              })  
-            })); 
-
-          console.log('callback timeout 750')
-
-          },750)
-
+          boltsActive: boltsActive,
+          eventQue: eventQue
         }) 
-
-        
-
 
       } 
     } 
@@ -94,11 +86,10 @@ class Pulsometer extends Component  {
 
   componentDidMount() {
     this.configureWebSocket();
-    this.timeLoop();
   }
 
   componentDidUpdate() { 
-    //console.log(this.state.eventCount); 
+    //console.log(this.state.eventQue); 
   }
 
   render() { 
