@@ -5,17 +5,17 @@ import $ from "jquery";
 
   const initialBolts =  
     [
-      {position: 0, active: false},
-      {position: 1, active: false},
-      {position: 2, active: false},
-      {position: 3, active: false},
-      {position: 4, active: false},
-      {position: 5, active: false},
-      {position: 6, active: false},
-      {position: 7, active: false},
-      {position: 8, active: false},
-      {position: 9, active: false},
-      {position: 10, active: false} 
+      {position: 0, active: false, timestamp: Date.now()},
+      {position: 1, active: false, timestamp: Date.now()},
+      {position: 2, active: false, timestamp: Date.now()},
+      {position: 3, active: false, timestamp: Date.now()},
+      {position: 4, active: false, timestamp: Date.now()},
+      {position: 5, active: false, timestamp: Date.now()},
+      {position: 6, active: false, timestamp: Date.now()},
+      {position: 7, active: false, timestamp: Date.now()},
+      {position: 8, active: false, timestamp: Date.now()},
+      {position: 9, active: false, timestamp: Date.now()},
+      {position: 10, active: false, timestamp: Date.now()} 
     ]
 
 class Pulsometer extends Component  {
@@ -53,7 +53,28 @@ class Pulsometer extends Component  {
           lightningBolts: updatedLightningBolts,
           boltsActive: this.state.boltsActive + 1,
           eventCount: this.state.eventCount + 1
+        },()=>{
+          setTimeout(() => { 
+            this.setState(state => ({ 
+              lightningBolts: state.lightningBolts.map(bolt => {
+                // console.log('bolt.position',bolt.position);
+                if (bolt.position === position) { 
+                  console.log('matches, position: ',bolt.position)
+                 // bolt.active = false; 
+                }
+                return bolt;
+              })  
+            })); 
+
+          console.log('callback timeout 750')
+
+          },750)
+
         }) 
+
+        
+
+
       } 
     } 
   } 
