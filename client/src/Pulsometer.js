@@ -9,13 +9,13 @@ import $ from "jquery";
       {position: 1, active: false, timestamp: Date.now()},
       {position: 2, active: false, timestamp: Date.now()},
       {position: 3, active: false, timestamp: Date.now()},
-      {position: 4, active: false, timestamp: Date.now()},
+      /*{position: 4, active: false, timestamp: Date.now()},
       {position: 5, active: false, timestamp: Date.now()},
       {position: 6, active: false, timestamp: Date.now()},
       {position: 7, active: false, timestamp: Date.now()},
       {position: 8, active: false, timestamp: Date.now()},
       {position: 9, active: false, timestamp: Date.now()},
-      {position: 10, active: false, timestamp: Date.now()} 
+      {position: 10, active: false, timestamp: Date.now()} */
     ]
 
 class Pulsometer extends Component  {
@@ -29,22 +29,31 @@ class Pulsometer extends Component  {
     }
   } 
 
-  runCue = () => {
+  clearCue = () => { 
+
+    console.log('clear cue');
+
+    if (this.state.cue === 0) return;
+
+    var cue = this.state.cue;
+
+    console.log(cue);
+
+    for (let i = 0; i < cue; i++) { 
+      console.log('run cue loop '); 
+    }
+
+    //this.setState({cue:0}); 
 
   }
 
   addEvent = () => { 
 
-        if (this.state.cue !== 0) {
-          this.setState({cue:this.state.cue++});
-          return;
-        }
-
-        const inactiveBolt = this.state.lightningBolts.find(bolt => { 
-          return bolt.active === false 
-        }); 
-
-        // If Inactive Bolt
+      // If Inactive Bolt
+      
+      const inactiveBolt = this.state.lightningBolts.find(bolt => { 
+        return bolt.active === false 
+      }); 
 
       if (inactiveBolt !== undefined) { 
                
@@ -69,8 +78,8 @@ class Pulsometer extends Component  {
     } 
 
     else {
-      console.log('cue');
-      this.setState({cue: this.state.cue++});
+      console.log('increase state cue')
+      this.setState({cue: this.state.cue+1})
     }
 
   } 
@@ -93,7 +102,8 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    //console.log(this.state.cue); 
+    this.clearCue();
+    console.log('state cue: ',this.state.cue); 
   }
 
   render() { 
