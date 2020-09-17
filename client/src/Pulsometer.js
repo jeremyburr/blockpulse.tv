@@ -37,10 +37,7 @@ class Pulsometer extends Component  {
     if (this.state.cue === 0) return; 
     if (!this.state.clearCue) { 
       this.setState({clearCue:true}) 
-    }
-
-
-
+    } 
 
 
     this.clearCue();
@@ -51,12 +48,11 @@ class Pulsometer extends Component  {
   clearCue = () => { 
 
     var cue = this.state.cue; 
+    console.log('cue',cue);
 
     for (let i = 0; i < cue; i++) { 
 
-      console.log('cue',cue);
-      console.log('run cue loop '); 
-
+      console.log('sendBolt()'); 
       this.sendBolt();
 
     } 
@@ -65,6 +61,9 @@ class Pulsometer extends Component  {
 
   sendBolt = () => { 
 
+
+
+    
   }
 
 
