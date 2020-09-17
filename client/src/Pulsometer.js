@@ -23,15 +23,22 @@ class Pulsometer extends Component  {
   constructor() {
     super();
     this.state = {
-      eventCue: 0,
+      cue: 0,
       boltsActive: 0,
       lightningBolts: initialBolts
     }
   } 
 
+  runCue = () => {
+
+  }
+
   addEvent = () => { 
 
-
+        if (this.state.cue !== 0) {
+          this.setState({cue:this.state.cue++});
+          return;
+        }
 
         const inactiveBolt = this.state.lightningBolts.find(bolt => { 
           return bolt.active === false 
@@ -44,19 +51,15 @@ class Pulsometer extends Component  {
         const position = inactiveBolt.position; 
 
         const updatedLightningBolts = this.state.lightningBolts.map(bolt => { 
-        
           if (bolt.position === position) { 
             bolt.active = true; 
             bolt.timestamp = Date.now(); 
           } 
-          
           else if (bolt.active && (Date.now() - bolt.timestamp > 750)) { 
             bolt.active = false;
             bolt.timestamp = Date.now(); 
-          }
-
+          } 
           return bolt; 
-
         }) 
 
         this.setState({ 
@@ -64,10 +67,12 @@ class Pulsometer extends Component  {
         }) 
        
     } 
+
     else {
       console.log('cue');
-      this.setState({eventCue: this.state.eventCue++});
+      this.setState({cue: this.state.cue++});
     }
+
   } 
 
   configureWebSocket = () => { 
@@ -88,7 +93,7 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    //console.log(this.state.eventCue); 
+    //console.log(this.state.cue); 
   }
 
   render() { 
