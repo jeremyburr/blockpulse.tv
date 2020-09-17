@@ -23,46 +23,36 @@ class Pulsometer extends Component  {
   constructor() {
     super();
     this.state = {
-      eventQue: 0,
+      eventCue: 0,
       boltsActive: 0,
       lightningBolts: initialBolts
     }
   } 
 
   addEvent = () => { 
-    
-    if (this.state.boltsActive < 11) { 
 
-      const inactiveBolt = this.state.lightningBolts.find(bolt => { 
-        return bolt.active === false 
-      }); 
 
-        let eventQue = this.state.eventQue;
-        let boltsActive = this.state.boltsActive;
+
+        const inactiveBolt = this.state.lightningBolts.find(bolt => { 
+          return bolt.active === false 
+        }); 
+
+        // If Inactive Bolt
 
       if (inactiveBolt !== undefined) { 
-        
+               
         const position = inactiveBolt.position; 
 
         const updatedLightningBolts = this.state.lightningBolts.map(bolt => { 
-
-        const currentTime = Date.now(); 
-        const boltTime = bolt.timestamp; 
         
           if (bolt.position === position) { 
             bolt.active = true; 
             bolt.timestamp = Date.now(); 
-            boltsActive++;
-            eventQue++;
           } 
-
-          else if (currentTime - boltTime > 750) { 
-            bolt.timestamp = currentTime; 
-            if (bolt.active === true) {
-              bolt.active = false;
-              eventQue--;
-              boltsActive--;
-            }
+          
+          else if (bolt.active && (Date.now() - bolt.timestamp > 750)) { 
+            bolt.active = false;
+            bolt.timestamp = Date.now(); 
           }
 
           return bolt; 
@@ -71,15 +61,12 @@ class Pulsometer extends Component  {
 
         this.setState({ 
           lightningBolts: updatedLightningBolts,
-          boltsActive: boltsActive,
-          eventQue: eventQue
         }) 
-        console.log('boltsActive',boltsActive) 
-      } 
+       
     } 
     else {
-      console.log('que');
-      this.setState({eventQue: this.state.eventQue++});
+      console.log('cue');
+      this.setState({eventCue: this.state.eventCue++});
     }
   } 
 
@@ -101,7 +88,7 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    //console.log(this.state.eventQue); 
+    //console.log(this.state.eventCue); 
   }
 
   render() { 
