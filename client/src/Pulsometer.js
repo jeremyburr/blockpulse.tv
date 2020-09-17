@@ -25,29 +25,55 @@ class Pulsometer extends Component  {
     this.state = {
       cue: 0,
       boltsActive: 0,
+      clearCue: false,
       lightningBolts: initialBolts
     }
   } 
 
-  clearCue = () => { 
+  listenForCue = () => {
 
-    console.log('clear cue');
+    console.log('listenForCue()');
 
-    if (this.state.cue === 0) return;
-
-    var cue = this.state.cue;
-
-    console.log(cue);
-
-    for (let i = 0; i < cue; i++) { 
-      console.log('run cue loop '); 
+    if (this.state.cue === 0) return; 
+    if (!this.state.clearCue) { 
+      this.setState({clearCue:true}) 
     }
 
-    //this.setState({cue:0}); 
+
+
+
+
+    this.clearCue();
+
 
   }
 
+  clearCue = () => { 
+
+    var cue = this.state.cue; 
+
+    for (let i = 0; i < cue; i++) { 
+
+      console.log('cue',cue);
+      console.log('run cue loop '); 
+
+      this.sendBolt();
+
+    } 
+
+  }
+
+  sendBolt = () => { 
+
+  }
+
+
   addEvent = () => { 
+
+      if (this.state.clearCue) { 
+        this.setState({cue:this.state.cue+1})
+        return; 
+      }
 
       // If Inactive Bolt
       
@@ -102,7 +128,8 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    this.clearCue();
+    //this.clearCue();
+    this.listenForCue();
     console.log('state cue: ',this.state.cue); 
   }
 
