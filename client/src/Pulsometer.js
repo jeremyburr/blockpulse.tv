@@ -24,9 +24,9 @@ class Pulsometer extends Component  {
     super();
     this.state = {
       cue: 0,
-      boltsActive: 0,
       clearCue: false,
-      lightningBolts: initialBolts
+      boltsActive: 0,
+      bolts: initialBolts
     }
   } 
 
@@ -35,24 +35,25 @@ class Pulsometer extends Component  {
     console.log('listenForCue()');
 
     if (this.state.cue === 0) return; 
-    if (!this.state.clearCue) { 
+
+    if (this.state.clearCue === false) { 
       this.setState({clearCue:true}) 
+      this.clearCue(); 
     } 
-
-
-    this.clearCue();
-
 
   }
 
   clearCue = () => { 
+
+    console.log('clearCue()')
 
     var cue = this.state.cue; 
     console.log('cue',cue);
 
     for (let i = 0; i < cue; i++) { 
 
-      console.log('sendBolt()'); 
+      //console.log('sendBolt()'); 
+
       this.sendBolt();
 
     } 
@@ -61,9 +62,10 @@ class Pulsometer extends Component  {
 
   sendBolt = () => { 
 
+    // change state of next bolt
 
 
-    
+
   }
 
 
@@ -76,7 +78,7 @@ class Pulsometer extends Component  {
 
       // If Inactive Bolt
       
-      const inactiveBolt = this.state.lightningBolts.find(bolt => { 
+      const inactiveBolt = this.state.bolts.find(bolt => { 
         return bolt.active === false 
       }); 
 
@@ -84,7 +86,7 @@ class Pulsometer extends Component  {
                
         const position = inactiveBolt.position; 
 
-        const updatedLightningBolts = this.state.lightningBolts.map(bolt => { 
+        const updatedLightningBolts = this.state.bolts.map(bolt => { 
           if (bolt.position === position) { 
             bolt.active = true; 
             bolt.timestamp = Date.now(); 
@@ -97,13 +99,13 @@ class Pulsometer extends Component  {
         }) 
 
         this.setState({ 
-          lightningBolts: updatedLightningBolts,
+          bolts: updatedLightningBolts,
         }) 
        
     } 
 
     else {
-      console.log('increase state cue')
+      //console.log('increase state cue')
       this.setState({cue: this.state.cue+1})
     }
 
@@ -129,7 +131,7 @@ class Pulsometer extends Component  {
   componentDidUpdate() { 
     //this.clearCue();
     this.listenForCue();
-    console.log('state cue: ',this.state.cue); 
+    //console.log('state cue: ',this.state.cue); 
   }
 
   render() { 
@@ -140,7 +142,7 @@ class Pulsometer extends Component  {
         <div className="pulsometer">
           <div className="antenna" >
             <div className="bulb" > 
-              <LightningBolts bolts={this.state.lightningBolts} /> 
+              <LightningBolts bolts={this.state.bolts} /> 
             </div>
           </div>
           <div className="header">
