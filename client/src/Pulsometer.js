@@ -25,111 +25,68 @@ class Pulsometer extends Component  {
     this.state = {
       cue: 0,
       clearCue: false,
-      boltsActive: 0,
+      atCapacity: false,
       bolts: initialBolts
     }
   } 
 
-  listenForCue = () => {
-
-    console.log('listenForCue()');
-
-    // Return If No Cue
-
-    if (this.state.cue === 0) return; 
-
-    // Set Cue State
-
-    console.log(this.state.cue);
-    if (this.state.clearCue === false) { 
-      this.setState({clearCue:true}) 
-    } 
-    else {
-      //return;
-    } 
-
-      let boltCount = 0;
-
-      for (const bolt of this.state.bolts) {
-        
-        if (Date.now() - bolt.timestamp > 750) { 
-          boltCount++;
-        }
-
-       console.log('boltCount',boltCount); 
-
-       this.sendBolts(boltCount); 
-
-      } 
-
-  }
-  
-  sendBolts = (boltCount) => { 
-
-    //const boltsLength = this.state.bolts.length; 
-
-    const updatedBolts = this.state.bolts.map(bolt => {
-
-      if (boltCount > 0) { 
-        if (bolt.active = true);
-        boltCount--;
-      } 
-
-      return bolt;
-
-    })  
-
-    //this.setState({bolts:updatedBolts});
-
-
-
-    /*for (const bolt of this.state.bolts) {
-      console.log('bolt.position',bolt.position); 
-    }
-
-
-    console.log('bolts');*/
-
-
-    // Send Bolts
-
-    //this.setState({});
-
-    
-    // Get next available bolt from bolt time, set timeout 
-
-  }
-
   clearCue = () => { 
 
-   console.log('clearCue()')
+    this.setState({clearCue: true});
+    
+    console.log('clearCue()');
 
-    var cue = this.state.cue; 
-    console.log('cue',cue);
+      let boltCount = 0; 
 
-    for (let i = 0; i < cue; i++) { 
+      const boltInterval = setInterval(()=> {
 
-      //console.log('sendBolt()'); 
+        for (const bolt of this.state.bolts) { 
+          if (Date.now() - bolt.timestamp > 750) { 
+            boltCount++;
+          } 
+        }
 
-      this.sendBolt();
+        if (boltCount > 0) { 
+
+          console.log('boltCount: ',boltCount)
+
+          const updatedBolts = this.state.bolts.map(bolt => { 
+
+            if (bolt.position <= boltCount) { 
+              bolt.active = true;
+            }
+
+            return bolt; 
+          })
+
+          console.log(updatedBolts);
+
+          this.setState({
+            bolts:updatedBolts,
+            clearCue:false 
+          }) 
+
+          clearInterval(boltInterval);
+
+        }
+
+      },250) 
 
     } 
 
-    // After loop finishes, set clearCue to false
+    resetBolts = () => {
 
-  }
+        const updatedLightningBolts = this.state.bolts.map(bolt => { 
+          if (bolt.active && (Date.now() - bolt.timestamp > 750)) { 
+            bolt.active = false;
+          } 
+          return bolt; 
+        })
 
+    }
   
 
-
   addEvent = () => { 
-
-      if (this.state.clearCue) { 
-        this.setState({cue:this.state.cue+1})
-        return; 
-      }
-
-      // If Inactive Bolt
       
       const inactiveBolt = this.state.bolts.find(bolt => { 
         return bolt.active === false 
@@ -158,7 +115,6 @@ class Pulsometer extends Component  {
     } 
 
     else {
-      //console.log('increase state cue')
       this.setState({cue: this.state.cue+1})
     }
 
@@ -182,7 +138,11 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    this.listenForCue();
+    if ( (this.state.cue !== 0) && (this.state.clearCue === false) ) { 
+      this.clearCue(); 
+      this.resetBolts(); 
+    } 
+
   }
 
   render() { 
