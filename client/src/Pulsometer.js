@@ -10,12 +10,12 @@ import $ from "jquery";
       {position: 2, active: false, timestamp: Date.now()},
       {position: 3, active: false, timestamp: Date.now()},
       {position: 4, active: false, timestamp: Date.now()},
-      {position: 5, active: false, timestamp: Date.now()},
+      /*{position: 5, active: false, timestamp: Date.now()},
       {position: 6, active: false, timestamp: Date.now()},
       {position: 7, active: false, timestamp: Date.now()},
       {position: 8, active: false, timestamp: Date.now()},
       {position: 9, active: false, timestamp: Date.now()},
-      {position: 10, active: false, timestamp: Date.now()} 
+      {position: 10, active: false, timestamp: Date.now()} */
     ]
 
 class Pulsometer extends Component  {
@@ -34,7 +34,7 @@ class Pulsometer extends Component  {
 
     this.setState({clearCue: true});
     
-    console.log('clearCue()');
+    //console.log('clearCue()');
 
       let boltCount = 0; 
 
@@ -48,7 +48,7 @@ class Pulsometer extends Component  {
 
         if (boltCount > 0) { 
 
-          console.log('boltCount: ',boltCount)
+         //console.log('boltCount: ',boltCount)
 
           const updatedBolts = this.state.bolts.map(bolt => { 
 
@@ -59,7 +59,7 @@ class Pulsometer extends Component  {
             return bolt; 
           })
 
-          console.log(updatedBolts);
+          //console.log(updatedBolts);
 
           this.setState({
             bolts:updatedBolts,
@@ -141,6 +141,7 @@ class Pulsometer extends Component  {
     if ( (this.state.cue !== 0) && (this.state.clearCue === false) ) { 
       this.clearCue(); 
       this.resetBolts(); 
+      console.log('state cue',this.state.cue);
     } 
 
   }
