@@ -10,12 +10,12 @@ import $ from "jquery";
       {position: 2, active: false, timestamp: Date.now()},
       {position: 3, active: false, timestamp: Date.now()},
       {position: 4, active: false, timestamp: Date.now()},
-      /*{position: 5, active: false, timestamp: Date.now()},
+      {position: 5, active: false, timestamp: Date.now()},
       {position: 6, active: false, timestamp: Date.now()},
       {position: 7, active: false, timestamp: Date.now()},
       {position: 8, active: false, timestamp: Date.now()},
       {position: 9, active: false, timestamp: Date.now()},
-      {position: 10, active: false, timestamp: Date.now()} */
+      {position: 10, active: false, timestamp: Date.now()}
     ]
 
 class Pulsometer extends Component  {
@@ -63,7 +63,8 @@ class Pulsometer extends Component  {
 
           this.setState({
             bolts:updatedBolts,
-            clearCue:false 
+            clearCue:false,
+            cue:this.state.cue-boltCount
           }) 
 
           clearInterval(boltInterval);
