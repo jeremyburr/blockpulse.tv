@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
 import LightningBolts from "./LightningBolts.js";
-import $ from "jquery";
+//import $ from "jquery";
 
   const bolts =  
     [
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
+      /*{active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
-      {active: false, timestamp: Date.now()},
-      {active: false, timestamp: Date.now()}
+      {active: false, timestamp: Date.now()}*/
     ]
 
 class Pulsometer extends Component  {
@@ -56,7 +56,7 @@ class Pulsometer extends Component  {
 
     resetBolts = () => { 
       let newBoltsActive = 0;
-      const newBolts = this.state.bolts.map(bolt => { 
+      const bolts = this.state.bolts.map(bolt => { 
         if ( (bolt.active ) && (Date.now() - bolt.timestamp > 750)) { 
           bolt.active = false;
           newBoltsActive++;
@@ -69,12 +69,12 @@ class Pulsometer extends Component  {
       }) 
     }
 
-  incrementCue = () => { 
-    this.setState({cue:this.state.cue+1}) 
-  }
+    incrementCue = () => { 
+      this.setState({cue:this.state.cue+1}) 
+    }
 
   sendBolt = () => { 
-    console.log('sendbolt()');
+
     let boltsActiveDelta = 0; 
 
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
@@ -84,6 +84,7 @@ class Pulsometer extends Component  {
         bolt.timestamp = Date.now(); 
         boltsActiveDelta++;
       } 
+
       else if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
         bolt.active = false;
         boltsActiveDelta--;
@@ -91,16 +92,16 @@ class Pulsometer extends Component  {
       return bolt; 
     }) 
 
-    console.log(updatedLightningBolts);
+    //console.log(updatedLightningBolts);
 
     this.setState({ 
       bolts: updatedLightningBolts,
-      boltsActive:this.state.boltsActive + boltsActiveDelta
+      boltsActive:this.state.boltsActive + boltsActiveDelta,
     }) 
   }
   
 
-  addEvent = () => { 
+  socketEvent = () => { 
     if (!this.state.clearCue) { 
       this.sendBolt(); 
     } 
@@ -114,7 +115,7 @@ class Pulsometer extends Component  {
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
         //console.log(JSON.parse(evt.data));
-        this.addEvent();
+        this.socketEvent();
       } 
     } 
   } 
@@ -125,11 +126,11 @@ class Pulsometer extends Component  {
   }
 
   componentDidUpdate() { 
-    if ( (this.state.cue !== 0) && (this.state.clearCue === false) ) { 
+    if ((this.state.cue !== 0) && (!this.state.clearCue)) { 
       this.clearCue(); 
       this.resetBolts(); 
-      console.log('state cue',this.state.cue);
     } 
+      console.log('state cue',this.state.cue);
 
   }
 
