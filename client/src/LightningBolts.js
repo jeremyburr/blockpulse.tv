@@ -10,6 +10,8 @@ class LightningBolts extends Component  {
 
     //console.log(this.props.bolts)
 
+    // Separate Paths into separate component for better rendering optimization?
+
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.props.bolts.map((bolt,index) => (

@@ -32,7 +32,7 @@ class Pulsometer extends Component  {
 
   listenForCue = () => { 
     if (this.state.cue > 0) {
-      this.clearCue(); 
+      //this.clearCue(); 
     } 
   }
 
@@ -47,6 +47,9 @@ class Pulsometer extends Component  {
       } 
       return bolt; 
     }) 
+
+    // Check for new increments?
+
     this.setState({
       bolts:newBolts,
       clearCue:false,
@@ -92,22 +95,30 @@ class Pulsometer extends Component  {
       return bolt; 
     }) 
 
-    //console.log(updatedLightningBolts);
+    //const clearCue = this.
 
     this.setState({ 
       bolts: updatedLightningBolts,
-      boltsActive:this.state.boltsActive + boltsActiveDelta,
+      boltsActive:this.state.boltsActive+boltsActiveDelta,
     }) 
   }
   
 
   socketEvent = () => { 
-    if (!this.state.clearCue) { 
+
+    console.log('state.boltsActive',this.state.boltsActive);
+
+    let atCapacity = this.state.boltsActive === this.state.bolts.length;
+
+    console.log('at capacity',atCapacity);
+
+    if (!atCapacity) { 
       this.sendBolt(); 
     } 
-    if (this.state.clearCue) { 
+    else { 
       this.incrementCue(); 
     } 
+
   } 
 
   configureWebSocket = () => { 
@@ -124,6 +135,8 @@ class Pulsometer extends Component  {
     this.configureWebSocket();
     this.listenForCue();
   }
+
+  // Optimization inside componentWillUpdate?
 
   componentDidUpdate() { 
     if ((this.state.cue !== 0) && (!this.state.clearCue)) { 
