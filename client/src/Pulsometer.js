@@ -78,23 +78,23 @@ class Pulsometer extends Component  {
 
       let boltsReset = 0;
 
-      console.log('resetBolts()')
+      //console.log('resetBolts()')
       const bolts = this.state.bolts.map(bolt => { 
-        console.log('bolt.active',bolt.active);
+        //console.log('bolt.active',bolt.active);
         let expired = Date.now() - bolt.timestamp > 750;
-        console.log('expired',expired);
-        console.log(this.state.bolts);
+        //console.log('expired',expired);
+        //console.log(this.state.bolts);
         if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
 
           bolt.active = false;
           boltsReset++;
-          console.log('reset bolt');
+          //console.log('reset bolt');
 
         } 
         return bolt; 
       }) 
       if (boltsReset > 0) { 
-        console.log('setting new bolt state')
+        //console.log('setting new bolt state')
         this.setState({
           bolts:bolts,
         }) 
@@ -109,7 +109,7 @@ class Pulsometer extends Component  {
 
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
 
-      console.log('boltindex',this.state.bolts.indexOf(bolt));
+      //console.log('boltindex',this.state.bolts.indexOf(bolt));
       //console.log('this.getBoltsActive()-1',this.getBoltsActive()-1)
 
       if (this.state.bolts.indexOf(bolt) === this.getBoltsActive()) { 
@@ -126,7 +126,8 @@ class Pulsometer extends Component  {
     }) 
     this.setState({ 
       bolts: updatedLightningBolts,
-    }) 
+    },()=>{setTimeout(()=>{this.resetBolts()},750)}) 
+    
   } 
 
   socketEvent = () => { 
@@ -147,7 +148,7 @@ class Pulsometer extends Component  {
     for (const bolt of this.state.bolts ) { 
       if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
         openBolts++
-        console.log('open bolt');
+        //console.log('open bolt');
       } 
     } 
     return openBolts; 
@@ -165,7 +166,7 @@ class Pulsometer extends Component  {
     this.resetBolts(); 
 
     const openBolts = this.getOpenBolts(); 
-    if ((this.state.cue>0) &&(openBolts>0)) {
+    if ((this.state.cue>0) && (openBolts>0)) {
       this.clearCue(openBolts); 
     } 
 
