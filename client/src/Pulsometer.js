@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import "./pulsometer.scss";
 import LightningBolts from "./LightningBolts.js";
+//import process from 'process';
 //import $ from "jquery";
 
   const bolts =  
     [
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
-      {active: false, timestamp: Date.now()},
+      {active: false, timestamp: Date.now()}
       /*{active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
       {active: false, timestamp: Date.now()},
@@ -20,105 +21,14 @@ import LightningBolts from "./LightningBolts.js";
 
 class Pulsometer extends Component  {
 
+  // Replace boltsActive state with function that uses bolts array?
+
   constructor() {
     super();
     this.state = {
-      boltsActive: 0,
       cue: 0,
-      clearCue: false,
       bolts: bolts
     }
-  } 
-
-  listenForCue = () => { 
-    if (this.state.cue > 0) {
-      //this.clearCue(); 
-    } 
-  }
-
-  clearCue = () => { 
-    this.setState({clearCue: true}); 
-    const boltCount = this.state.bolts.length - this.state.boltsActive; 
-    let boltsChanged = 0; 
-    const newBolts = this.state.bolts.map(bolt => { 
-      if ( (this.state.bolts.indexOf(bolt) <= boltCount) && (Date.now() - bolt.timestamp > 750) ) { 
-        bolt.active = true;
-        boltsChanged++;
-      } 
-      return bolt; 
-    }) 
-
-    // Check for new increments?
-
-    this.setState({
-      bolts:newBolts,
-      clearCue:false,
-      cue:this.state.cue - boltsChanged
-    }) 
-  } 
-
-    resetBolts = () => { 
-      let newBoltsActive = 0;
-      const bolts = this.state.bolts.map(bolt => { 
-        if ( (bolt.active ) && (Date.now() - bolt.timestamp > 750)) { 
-          bolt.active = false;
-          newBoltsActive++;
-        } 
-        return bolt; 
-      }) 
-      this.setState({
-        bolts:bolts,
-        boltsActive:this.boltsActive + newBoltsActive
-      }) 
-    }
-
-    incrementCue = () => { 
-      this.setState({cue:this.state.cue+1}) 
-    }
-
-  sendBolt = () => { 
-
-    let boltsActiveDelta = 0; 
-
-    const updatedLightningBolts = this.state.bolts.map(bolt => { 
-
-      if (this.state.bolts.indexOf(bolt) === this.state.boltsActive) { 
-        bolt.active = true; 
-        bolt.timestamp = Date.now(); 
-        boltsActiveDelta++;
-      } 
-
-      else if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
-        bolt.active = false;
-        boltsActiveDelta--;
-      } 
-      return bolt; 
-    }) 
-
-    //const clearCue = this.
-
-    this.setState({ 
-      bolts: updatedLightningBolts,
-      boltsActive:this.state.boltsActive+boltsActiveDelta,
-    }) 
-  }
-  
-
-  socketEvent = () => { 
-
-    console.log('state.boltsActive',this.state.boltsActive);
-
-    let atCapacity = this.state.boltsActive === this.state.bolts.length;
-
-    console.log('at capacity',atCapacity);
-
-    if (!atCapacity) { 
-      this.sendBolt(); 
-    } 
-    else { 
-      this.incrementCue(); 
-    } 
-
   } 
 
   configureWebSocket = () => { 
@@ -129,21 +39,118 @@ class Pulsometer extends Component  {
         this.socketEvent();
       } 
     } 
+  }
+
+  listenForCue = () => { 
+    if (this.state.cue > 0) {
+      //this.clearCue(); 
+    } 
+  }
+
+  clearCue = (openBolts) => { 
+
+    let boltsChanged = 0; 
+
+    const bolts = this.state.bolts.map(bolt => { 
+      if (this.state.bolts.indexOf(bolt) <= openBolts) { 
+        bolt.active = true;
+        boltsChanged++;
+      } 
+      return bolt; 
+    }) 
+
+    this.setState({
+      bolts:bolts,
+      cue:this.state.cue - boltsChanged
+    }) 
   } 
+
+    getBoltsActive = () => { 
+      let boltsActive = 0; 
+      for (const bolt in this.state.bolts) { 
+        if (bolt.active) boltsActive++ 
+      } 
+      return boltsActive;
+    }
+
+    resetBolts = () => { 
+      let boltsActive = this.getBoltsActive()
+      let boltsReset = 0;
+      const bolts = this.state.bolts.map(bolt => { 
+        if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
+          bolt.active = false;
+          boltsReset++;
+        } 
+        return bolt; 
+      }) 
+      if (boltsReset > 0) { 
+        this.setState({
+          bolts:bolts,
+        }) 
+      }
+    }
+
+    incrementCue = () => { 
+      this.setState({cue:this.state.cue+1}) 
+    }
+
+  sendBolt = () => { 
+    const updatedLightningBolts = this.state.bolts.map(bolt => { 
+      if (this.state.bolts.indexOf(bolt) > this.getBoltsActive()) { 
+        bolt.active = true; 
+        bolt.timestamp = Date.now(); 
+      } 
+      else if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
+        bolt.active = false;
+      } 
+      return bolt; 
+    }) 
+    this.setState({ 
+      bolts: updatedLightningBolts,
+    }) 
+  } 
+
+  socketEvent = () => { 
+    let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
+    if (!atCapacity) { 
+      this.sendBolt(); 
+    } 
+    else if (atCapacity) { 
+      this.incrementCue(); 
+    } 
+  } 
+
+  getOpenBolts = () => { 
+    console.log('getOpenBolts()')
+    let openBolts = 0; 
+    for (const bolt of this.state.bolts ) { 
+      //console.log(bolt.active);
+      //console.log(bolt.timestamp);
+      if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
+        openBolts++
+        console.log('open bolt');
+      } 
+    } 
+    return openBolts; 
+  }  
 
   componentDidMount() {
     this.configureWebSocket();
-    this.listenForCue();
+    //this.listenForCue();
   }
 
   // Optimization inside componentWillUpdate?
 
   componentDidUpdate() { 
-    if ((this.state.cue !== 0) && (!this.state.clearCue)) { 
-      this.clearCue(); 
-      this.resetBolts(); 
+
+    this.resetBolts(); 
+
+    const openBolts = this.getOpenBolts(); 
+    if ((this.state.cue>0) &&(openBolts>0)) {
+      this.clearCue(openBolts); 
     } 
-      console.log('state cue',this.state.cue);
+
+    console.log('state cue',this.state.cue); 
 
   }
 
