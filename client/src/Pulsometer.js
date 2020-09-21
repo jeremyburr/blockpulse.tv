@@ -68,23 +68,33 @@ class Pulsometer extends Component  {
     getBoltsActive = () => { 
       let boltsActive = 0; 
       for (const bolt of this.state.bolts) { 
-        console.log('bolt.active',bolt.active)
+        //console.log('bolt.active',bolt.active)
         if (bolt.active) boltsActive++ 
       } 
       return boltsActive;
     }
 
     resetBolts = () => { 
-      let boltsActive = this.getBoltsActive()
+
       let boltsReset = 0;
+
+      console.log('resetBolts()')
       const bolts = this.state.bolts.map(bolt => { 
+        console.log('bolt.active',bolt.active);
+        let expired = Date.now() - bolt.timestamp > 750;
+        console.log('expired',expired);
+        console.log(this.state.bolts);
         if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
+
           bolt.active = false;
           boltsReset++;
+          console.log('reset bolt');
+
         } 
         return bolt; 
       }) 
       if (boltsReset > 0) { 
+        console.log('setting new bolt state')
         this.setState({
           bolts:bolts,
         }) 
@@ -96,11 +106,14 @@ class Pulsometer extends Component  {
   }
 
   sendBolt = () => { 
+
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
-      if (this.state.bolts.indexOf(bolt) > this.getBoltsActive()) { 
+
+      if (this.state.bolts.indexOf(bolt) === this.getBoltsActive() - 1) { 
         bolt.active = true; 
         bolt.timestamp = Date.now(); 
       } 
+
       else if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
         bolt.active = false;
       } 
@@ -112,7 +125,7 @@ class Pulsometer extends Component  {
   } 
 
   socketEvent = () => { 
-    console.log('this.state.bolts.length',this.state.bolts.length)
+    //console.log('this.state.bolts.length',this.state.bolts.length)
     console.log('this.getBoltsActive()',this.getBoltsActive())
     let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
     if (!atCapacity) { 
