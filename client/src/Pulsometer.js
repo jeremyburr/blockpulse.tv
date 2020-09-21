@@ -124,8 +124,6 @@ class Pulsometer extends Component  {
     console.log('getOpenBolts()')
     let openBolts = 0; 
     for (const bolt of this.state.bolts ) { 
-      //console.log(bolt.active);
-      //console.log(bolt.timestamp);
       if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
         openBolts++
         console.log('open bolt');
@@ -136,7 +134,7 @@ class Pulsometer extends Component  {
 
   componentDidMount() {
     this.configureWebSocket();
-    //this.listenForCue();
+    //this.listenForCue(); // Need an interval test between state changes for clearing cue
   }
 
   // Optimization inside componentWillUpdate?
