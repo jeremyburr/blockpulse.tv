@@ -60,24 +60,22 @@ class Pulsometer extends Component  {
     }) 
   } 
 
-    
-
-    resetBolts = () => { 
-      let boltsReset = 0; 
-      const bolts = this.state.bolts.map(bolt => { 
-        let expired = Date.now() - bolt.timestamp > 750;
-        if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
-          bolt.active = false;
-          boltsReset++; 
-        } 
-        return bolt; 
+  resetBolts = () => { 
+    let boltsReset = 0; 
+    const bolts = this.state.bolts.map(bolt => { 
+      let expired = Date.now() - bolt.timestamp > 750;
+      if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
+        bolt.active = false;
+        boltsReset++; 
+      } 
+      return bolt; 
+    }) 
+    if (boltsReset > 0) { 
+      this.setState({
+        bolts:bolts,
       }) 
-      if (boltsReset > 0) { 
-        this.setState({
-          bolts:bolts,
-        }) 
-      }
     }
+  }
 
   incrementCue = () => { 
     this.setState({cue:this.state.cue+1}) 
