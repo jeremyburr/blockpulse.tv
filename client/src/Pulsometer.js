@@ -67,7 +67,8 @@ class Pulsometer extends Component  {
 
     getBoltsActive = () => { 
       let boltsActive = 0; 
-      for (const bolt in this.state.bolts) { 
+      for (const bolt of this.state.bolts) { 
+        console.log('bolt.active',bolt.active)
         if (bolt.active) boltsActive++ 
       } 
       return boltsActive;
@@ -90,9 +91,9 @@ class Pulsometer extends Component  {
       }
     }
 
-    incrementCue = () => { 
-      this.setState({cue:this.state.cue+1}) 
-    }
+  incrementCue = () => { 
+    this.setState({cue:this.state.cue+1}) 
+  }
 
   sendBolt = () => { 
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
@@ -111,6 +112,8 @@ class Pulsometer extends Component  {
   } 
 
   socketEvent = () => { 
+    console.log('this.state.bolts.length',this.state.bolts.length)
+    console.log('this.getBoltsActive()',this.getBoltsActive())
     let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
     if (!atCapacity) { 
       this.sendBolt(); 
