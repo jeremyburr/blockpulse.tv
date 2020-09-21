@@ -121,7 +121,7 @@ class Pulsometer extends Component  {
   } 
 
   getOpenBolts = () => { 
-    console.log('getOpenBolts()')
+    //console.log('getOpenBolts()')
     let openBolts = 0; 
     for (const bolt of this.state.bolts ) { 
       if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
