@@ -109,7 +109,10 @@ class Pulsometer extends Component  {
 
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
 
-      if (this.state.bolts.indexOf(bolt) === this.getBoltsActive() - 1) { 
+      console.log('boltindex',this.state.bolts.indexOf(bolt));
+      //console.log('this.getBoltsActive()-1',this.getBoltsActive()-1)
+
+      if (this.state.bolts.indexOf(bolt) === this.getBoltsActive()) { 
         bolt.active = true; 
         bolt.timestamp = Date.now(); 
       } 
@@ -117,7 +120,9 @@ class Pulsometer extends Component  {
       else if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
         bolt.active = false;
       } 
+
       return bolt; 
+
     }) 
     this.setState({ 
       bolts: updatedLightningBolts,
