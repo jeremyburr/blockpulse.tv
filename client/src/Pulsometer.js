@@ -72,40 +72,44 @@ class Pulsometer extends Component  {
       return bolt; 
     }) 
     if (boltsReset > 0) { 
-      this.setState({
+      /*this.setState({
         //bolts:bolts,
-      }) 
+      })*/ 
     }
   }
 
   incrementCue = () => { 
-    console.log('incrementCue()')
-    this.setState({bolts:this.state.bolts}) 
+    //console.log('incrementCue()')
+    //this.setState({bolts:this.state.bolts}) 
   }
 
   sendBolt = () => { 
+    const boltsActive = this.getBoltsActive();
     const updatedLightningBolts = this.state.bolts.map(bolt => { 
-      if (this.state.bolts.indexOf(bolt) === this.getBoltsActive()) { 
+      if (this.state.bolts.indexOf(bolt) === boltsActive) { 
         bolt.active = true; 
         bolt.timestamp = Date.now(); 
       } 
       return bolt; 
-    }) 
-    /*this.setState({ 
+    })
+    this.setState({ 
       bolts: updatedLightningBolts,
-    },()=>{setTimeout(()=>{this.resetBolts()},750)}) */
+    },()=>{setTimeout(()=>{this.resetBolts()},750)})
   } 
 
   socketEvent = () => { 
     let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
     // Add clearCue state property for edge case when capacity indicator is false during a cue clearing
+
+  console.log('getBoltsActive()',this.getBoltsActive());
+
     if (!atCapacity) { 
       this.sendBolt(); 
       console.log('not capacity');
     } 
     else if (atCapacity) { 
+      console.log('at capacity');
       this.incrementCue(); 
-      console.log('not capacity');
     } 
   } 
 
