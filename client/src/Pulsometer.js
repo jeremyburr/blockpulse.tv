@@ -7,15 +7,15 @@ const bolts =
   [
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
+    {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()}
-    /*{active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()}*/
   ]
 
 class Pulsometer extends Component  { 
@@ -45,7 +45,7 @@ class Pulsometer extends Component  {
     return boltsActive;
   } 
 
-  clearCue = (openBolts) => { 
+  /*clearCue = (openBolts) => { 
     let boltsChanged = 0; 
     const bolts = this.state.bolts.map(bolt => { 
       if (this.state.bolts.indexOf(bolt) <= openBolts) { 
@@ -54,14 +54,15 @@ class Pulsometer extends Component  {
       } 
       return bolt; 
     }) 
-    this.setState({
+    /*this.setState({
       bolts:bolts,
       cue:this.state.cue - boltsChanged
-    }) 
-  } 
+    }) */
+ // } 
 
   resetBolts = () => { 
     let boltsReset = 0; 
+    // Optimized array copy approach (instead of .map) when item index is known in advance
     const bolts = this.state.bolts.map(bolt => { 
       let expired = Date.now() - bolt.timestamp > 750;
       if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
@@ -72,13 +73,14 @@ class Pulsometer extends Component  {
     }) 
     if (boltsReset > 0) { 
       this.setState({
-        bolts:bolts,
+        //bolts:bolts,
       }) 
     }
   }
 
   incrementCue = () => { 
-    this.setState({cue:this.state.cue+1}) 
+    console.log('incrementCue()')
+    this.setState({bolts:this.state.bolts}) 
   }
 
   sendBolt = () => { 
@@ -89,18 +91,21 @@ class Pulsometer extends Component  {
       } 
       return bolt; 
     }) 
-    this.setState({ 
+    /*this.setState({ 
       bolts: updatedLightningBolts,
-    },()=>{setTimeout(()=>{this.resetBolts()},750)}) 
+    },()=>{setTimeout(()=>{this.resetBolts()},750)}) */
   } 
 
   socketEvent = () => { 
     let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
+    // Add clearCue state property for edge case when capacity indicator is false during a cue clearing
     if (!atCapacity) { 
       this.sendBolt(); 
+      console.log('not capacity');
     } 
     else if (atCapacity) { 
       this.incrementCue(); 
+      console.log('not capacity');
     } 
   } 
 
@@ -121,12 +126,12 @@ class Pulsometer extends Component  {
   // Optimization inside componentWillUpdate/shouldComponentUpdate?
 
   componentDidUpdate() { 
-    this.resetBolts(); 
     const openBolts = this.getOpenBolts(); 
     if ((this.state.cue>0) && (openBolts>0)) {
-      this.clearCue(openBolts); 
+      //this.clearCue(openBolts); 
     } 
-    console.log('state cue',this.state.cue); 
+    //console.log('state cue',this.state.cue); 
+    console.log('this.state.bolts',this.state.bolts); 
   }
 
   render() { 
