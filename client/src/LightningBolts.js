@@ -3,6 +3,10 @@ import "./pulsometer.scss";
 
 class LightningBolts extends Component  {
 
+  animationEnd = () => {
+    console.log("animation end");
+  }
+
   render() { 
 
     let dValues = "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5" 
@@ -15,7 +19,7 @@ class LightningBolts extends Component  {
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.props.bolts.map((bolt,index) => (
-          <path key={index} className={`bolt bolt-${index} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
+          <path onAnimationEnd={()=>this.animationEnd()} key={index} className={`bolt bolt-${index} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
         ))} 
       </svg>
     ) 

@@ -61,7 +61,7 @@ class Pulsometer extends Component  {
  // } 
 
   resetBolts = () => { 
-    let boltsReset = 0; 
+    /*let boltsReset = 0; 
     // Optimized array copy approach (instead of .map) when item index is known in advance
     const bolts = this.state.bolts.map(bolt => { 
       let expired = Date.now() - bolt.timestamp > 750;
@@ -70,7 +70,7 @@ class Pulsometer extends Component  {
         boltsReset++; 
       } 
       return bolt; 
-    }) 
+    })*/
   }
 
   incrementCue = () => { 
@@ -88,7 +88,7 @@ class Pulsometer extends Component  {
     })
     this.setState({ 
       bolts: updatedLightningBolts,
-    },()=>{setTimeout(()=>{this.resetBolts()},750)})
+    },()=>{setTimeout(()=>this.resetBolts(),750)})
   } 
 
   atCapacity = () => this.state.bolts.length === this.getBoltsActive(); 
@@ -113,7 +113,7 @@ class Pulsometer extends Component  {
     this.configureWebSocket();
   }
 
-  // Optimization inside componentWillUpdate/shouldComponentUpdate?
+  // Optimization inside shouldComponentUpdate?
 
   componentDidUpdate() { 
      
