@@ -106,11 +106,9 @@ configureWebSocket = () => {
     //if (atCapacity) this.clearCue(); 
   }
 
-  animationEnd = (boltIndex) => { 
-
+  resetBolt = (boltIndex) => { 
     console.log("animation end");
-    console.log("boltIndex: ",boltIndex);
-
+    console.log("boltIndex: ",boltIndex); 
     this.setState({
       bolts: this.state.bolts.map(bolt=>{
         if (this.state.bolts.indexOf(bolt === boltIndex)) {
@@ -119,7 +117,6 @@ configureWebSocket = () => {
         return bolt; 
       })
     }) 
-
   }
 
   render() { 
@@ -132,7 +129,7 @@ configureWebSocket = () => {
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.state.bolts.map((bolt,index) => (
-          <path onAnimationEnd={()=>this.animationEnd(index)} key={index} className={`bolt bolt-${index} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
+          <path onAnimationEnd={()=>this.resetBolt(index)} key={index} className={`bolt bolt-${index} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
         ))} 
       </svg>
     ) 
