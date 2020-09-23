@@ -10,12 +10,12 @@ const bolts =
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
+    /*{active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()}
+    {active: false, timestamp: Date.now()}*/
   ]
 
 class Pulsometer extends Component  { 
@@ -71,17 +71,11 @@ class Pulsometer extends Component  {
       } 
       return bolt; 
     }) 
-    if (boltsReset > 0) { 
-      /*this.setState({
-        //bolts:bolts,
-      })*/ 
-    }
   }
 
   incrementCue = () => { 
-    //console.log('incrementCue()')
-    //this.setState({bolts:this.state.bolts}) 
-  }
+    this.setState({cue:this.state.cue+1}) 
+  } 
 
   sendBolt = () => { 
     const boltsActive = this.getBoltsActive();
@@ -97,11 +91,13 @@ class Pulsometer extends Component  {
     },()=>{setTimeout(()=>{this.resetBolts()},750)})
   } 
 
-  socketEvent = () => { 
-    let atCapacity = this.state.bolts.length === this.getBoltsActive(); 
-    // Add clearCue state property for edge case when capacity indicator is false during a cue clearing
+  atCapacity = () => this.state.bolts.length === this.getBoltsActive(); 
 
-  console.log('getBoltsActive()',this.getBoltsActive());
+  socketEvent = () => { 
+    // Add clearCue state property for edge case when capacity indicator is false during a cue clearing 
+    console.log('getBoltsActive()',this.getBoltsActive());
+
+    let atCapacity = this.atCapacity();
 
     if (!atCapacity) { 
       this.sendBolt(); 
@@ -113,16 +109,6 @@ class Pulsometer extends Component  {
     } 
   } 
 
-  getOpenBolts = () => { 
-    let openBolts = 0; 
-    for (const bolt of this.state.bolts ) { 
-      if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
-        openBolts++
-      } 
-    } 
-    return openBolts; 
-  }  
-
   componentDidMount() {
     this.configureWebSocket();
   }
@@ -130,12 +116,13 @@ class Pulsometer extends Component  {
   // Optimization inside componentWillUpdate/shouldComponentUpdate?
 
   componentDidUpdate() { 
-    const openBolts = this.getOpenBolts(); 
-    if ((this.state.cue>0) && (openBolts>0)) {
-      //this.clearCue(openBolts); 
-    } 
-    //console.log('state cue',this.state.cue); 
-    console.log('this.state.bolts',this.state.bolts); 
+     
+    console.log('state cue',this.state.cue); 
+
+    let atCapacity = this.atCapacity();
+
+    //if (atCapacity) this.clearCue();
+
   }
 
   render() { 
