@@ -59,35 +59,21 @@ configureWebSocket = () => {
     }) */
  // } 
 
-  resetBolts = () => { 
-    /*let boltsReset = 0; 
-    // Optimized array copy approach (instead of .map) when item index is known in advance
-    const bolts = this.state.bolts.map(bolt => { 
-      let expired = Date.now() - bolt.timestamp > 750;
-      if ((bolt.active) && (Date.now() - bolt.timestamp > 750)) { 
-        bolt.active = false;
-        boltsReset++; 
-      } 
-      return bolt; 
-    })*/
-  }
-
   incrementCue = () => { 
     this.setState({cue:this.state.cue+1}) 
   } 
 
   sendBolt = () => { 
     const boltsActive = this.getBoltsActive();
-    const updatedLightningBolts = this.state.bolts.map(bolt => { 
-      if (this.state.bolts.indexOf(bolt) === boltsActive) { 
-        bolt.active = true; 
-        bolt.timestamp = Date.now(); 
-      } 
-      return bolt; 
-    })
     this.setState({ 
-      bolts: updatedLightningBolts,
-    },()=>{setTimeout(()=>this.resetBolts(),750)})
+      bolts:this.state.bolts.map(bolt => { 
+        if (this.state.bolts.indexOf(bolt) === boltsActive) { 
+          bolt.active = true; 
+          bolt.timestamp = Date.now(); 
+        } 
+        return bolt; 
+      })
+    })
   } 
 
   atCapacity = () => this.state.bolts.length === this.getBoltsActive(); 
@@ -115,13 +101,9 @@ configureWebSocket = () => {
   // Optimization inside shouldComponentUpdate?
 
   componentDidUpdate() { 
-     
     console.log('state cue',this.state.cue); 
-
-    let atCapacity = this.atCapacity();
-
-    //if (atCapacity) this.clearCue();
-
+    let atCapacity = this.atCapacity(); 
+    //if (atCapacity) this.clearCue(); 
   }
 
   animationEnd = (boltIndex) => { 
@@ -136,8 +118,7 @@ configureWebSocket = () => {
         }
         return bolt; 
       })
-    })
-
+    }) 
 
   }
 
