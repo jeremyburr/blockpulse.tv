@@ -80,10 +80,8 @@ configureWebSocket = () => {
 
   socketEvent = () => { 
     // Add clearCue state property for edge case when capacity indicator is false during a cue clearing 
-    console.log('getBoltsActive()',this.getBoltsActive());
-
-    let atCapacity = this.atCapacity();
-
+    console.log('getBoltsActive()',this.getBoltsActive()); 
+    let atCapacity = this.atCapacity(); 
     if (!atCapacity) { 
       this.sendBolt(); 
       console.log('not capacity');
