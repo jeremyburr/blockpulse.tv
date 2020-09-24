@@ -22,6 +22,7 @@ class LightningBolts extends Component  {
     super();
     this.state = {
       cue: 0,
+      clearClue: false,
       bolts: bolts 
     }
   }
@@ -44,20 +45,26 @@ configureWebSocket = () => {
     return boltsActive;
   } 
 
-  /*clearCue = (openBolts) => { 
-    let boltsChanged = 0; 
-    const bolts = this.state.bolts.map(bolt => { 
-      if (this.state.bolts.indexOf(bolt) <= openBolts) { 
-        bolt.active = true;
-        boltsChanged++;
-      } 
-      return bolt; 
-    }) 
-    /*this.setState({
-      bolts:bolts,
-      cue:this.state.cue - boltsChanged
-    }) */
- // } 
+  clearCue = () => { 
+
+    console.log('clearCue()');
+
+    let count = this.getBoltsActive();
+
+    if (this.getBoltsActive() > 0) {
+
+      /*this.setState({
+        bolts: this.state.bolts.map(bolt=>{
+        if (this.state.bolts.indexOf(bolt) <= count - 1) {
+          bolt.active = true;
+        } 
+        return bolt;
+        })
+      })*/
+      
+    } 
+
+  } 
 
   incrementCue = () => { 
     this.setState({cue:this.state.cue+1}) 
@@ -82,14 +89,16 @@ configureWebSocket = () => {
     // Add clearCue state property for edge case when capacity indicator is false during a cue clearing 
     console.log('getBoltsActive()',this.getBoltsActive()); 
     let atCapacity = this.atCapacity(); 
-    if (!atCapacity) { 
-      this.sendBolt(); 
-      console.log('not capacity');
-    } 
-    else if (atCapacity) { 
-      console.log('at capacity');
+
+    if ((atCapacity) || (this.state.clearCue)) { 
+      //console.log('at capacity');
       this.incrementCue(); 
     } 
+    else if (!atCapacity) { 
+      this.sendBolt(); 
+      //console.log('not capacity');
+    } 
+     
   } 
 
   componentDidMount() {
@@ -101,7 +110,9 @@ configureWebSocket = () => {
   componentDidUpdate() { 
     console.log('state cue',this.state.cue); 
     let atCapacity = this.atCapacity(); 
-    //if (atCapacity) this.clearCue(); 
+    if ((this.state.cue > 0) && (!this.state.clearCue)) 
+      this.setState({clearCue: true})
+    else if (this.state.clearCue) this.clearCue();  
   }
 
   resetBolt = (boltIndex) => { 
