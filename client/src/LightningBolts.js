@@ -47,11 +47,33 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    console.log('clearCue()');
 
-    let count = this.getBoltsActive();
+    // or maybe use "let" for cue
+
+    const cue = this.state.cue;
+
+    let count = this.getBoltsActive(); 
+
+    console.log('count',count);
+    
+
+    setInterval(()=>{
+
+    },750)
+
 
     if (this.getBoltsActive() > 0) {
+
+    }
+
+    else { 
+
+      for (let i=0; i<this.state.cue; i++) { 
+
+
+      }
+
+    }
 
       /*this.setState({
         bolts: this.state.bolts.map(bolt=>{
@@ -62,7 +84,7 @@ configureWebSocket = () => {
         })
       })*/
       
-    } 
+     
 
   } 
 
