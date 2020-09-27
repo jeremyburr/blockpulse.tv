@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./pulsometer.scss"; 
 //import $ from "jquery"; 
 
+
 const bolts =  
   [
     {active: false, timestamp: Date.now()},
@@ -22,7 +23,7 @@ class LightningBolts extends Component  {
     super();
     this.state = {
       cue: 0,
-      clearClue: false,
+      clearingCue: false,
       bolts: bolts 
     }
   }
@@ -47,17 +48,35 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
+    let getCue = () => this.state.cue;
 
-    // or maybe use "let" for cue
-
-    const cue = this.state.cue;
-
-    let count = this.getBoltsActive(); 
-
-    console.log('count',count);
+    let activeBolts = this.getBoltsActive(); 
+    console.log('activeBolts',activeBolts);
     
+    const clearLoop = setInterval(()=>{
 
-    setInterval(()=>{
+      const cue =  getCue(); 
+
+      if (cue > 0) { 
+
+        this.setState({
+          bolts: this.state.bolts.map(bolt=>{ 
+            activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state. 
+
+            return bolt;  
+          })
+        }) 
+        if (cue < activeBolts) clearInterval(clearLoop) 
+        
+      }
+
+      let iLimit = activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state.bolts.length; 
+      
+
+      for (let i=0; i < iLimit; i++) { 
+
+      } 
+
 
     },750)
 
@@ -112,7 +131,7 @@ configureWebSocket = () => {
     console.log('getBoltsActive()',this.getBoltsActive()); 
     let atCapacity = this.atCapacity(); 
 
-    if ((atCapacity) || (this.state.clearCue)) { 
+    if ((atCapacity) || (this.state.clearingCue)) { 
       //console.log('at capacity');
       this.incrementCue(); 
     } 
@@ -131,10 +150,9 @@ configureWebSocket = () => {
 
   componentDidUpdate() { 
     console.log('state cue',this.state.cue); 
-    let atCapacity = this.atCapacity(); 
-    if ((this.state.cue > 0) && (!this.state.clearCue)) 
-      this.setState({clearCue: true})
-    else if (this.state.clearCue) this.clearCue();  
+    if ((this.state.cue > 0) && (!this.state.clearingCue)) 
+      this.setState({clearingCue: true})
+    else if (this.state.clearingCue) this.clearCue();  
   }
 
   resetBolt = (boltIndex) => { 
