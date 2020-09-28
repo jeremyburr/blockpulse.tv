@@ -51,6 +51,7 @@ configureWebSocket = () => {
     let getCue = () => this.state.cue;
 
     let activeBolts = this.getBoltsActive(); 
+
     console.log('activeBolts',activeBolts);
     
     const clearLoop = setInterval(()=>{
@@ -59,51 +60,36 @@ configureWebSocket = () => {
 
       if (cue > 0) { 
 
-        this.setState({
-          bolts: this.state.bolts.map(bolt=>{ 
-            activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state. 
-
-            return bolt;  
-          })
-        }) 
-        if (cue < activeBolts) clearInterval(clearLoop) 
+        const remainder = remainder; 
         
-      }
+        let boltValue =  undefined;
 
-      let iLimit = activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state.bolts.length; 
-      
+        //let boltsToChange =  activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state. 
 
-      for (let i=0; i < iLimit; i++) { 
+        if (remainder > this.state.bolts.length) { 
+          this.setState({
+            bolts:this.state.bolts.map(bolt=>{
+              bolt.active = true;
+              return bolt; 
+            })
+          }) 
+        }
+        else {
+          this.setState({
+            bolts:this.state.bolts.map(bolt=>{
+              if (this.state.bolts.indexOf(bolt) <= remainder) {
+                bolt.active = true;
+              }
+              return bolt; 
+            })
+          }) 
+        } 
 
       } 
 
+      if (cue < activeBolts) clearInterval(clearLoop) 
 
-    },750)
-
-
-    if (this.getBoltsActive() > 0) {
-
-    }
-
-    else { 
-
-      for (let i=0; i<this.state.cue; i++) { 
-
-
-      }
-
-    }
-
-      /*this.setState({
-        bolts: this.state.bolts.map(bolt=>{
-        if (this.state.bolts.indexOf(bolt) <= count - 1) {
-          bolt.active = true;
-        } 
-        return bolt;
-        })
-      })*/
-      
-     
+    },750) 
 
   } 
 
