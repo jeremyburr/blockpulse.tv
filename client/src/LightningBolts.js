@@ -16,7 +16,9 @@ const bolts =
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()},
     {active: false, timestamp: Date.now()}*/
-  ]
+  ];
+
+  let clearLoop = undefined;
 
 class LightningBolts extends Component  {
   constructor() {
@@ -48,46 +50,43 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    let getCue = () => this.state.cue;
+    console.log('clearCue()');
 
     let activeBolts = this.getBoltsActive(); 
+    //console.log('activeBolts',activeBolts);
 
-    console.log('activeBolts',activeBolts);
+    if (clearLoop) return;
     
-    const clearLoop = setInterval(()=>{
+    clearLoop = setInterval(()=>{
 
-      const cue =  getCue(); 
+      const cue =  this.state.cue; 
 
-      if (cue > 0) { 
+      const remainder = cue > this.state.bolts.length; 
 
-        const remainder = remainder; 
-        
-        let boltValue =  undefined;
-
-        //let boltsToChange =  activeBolts > 0 ? this.state.bolts.length - activeBolts : this.state. 
-
-        if (remainder > this.state.bolts.length) { 
+      if (remainder <=0 )  { 
           this.setState({
-            bolts:this.state.bolts.map(bolt=>{
+            clearCue: false
+          }) 
+        clearInterval(clearLoop) 
+        return; 
+
+      } /*else if (remainder > this.state.bolts.length) { 
+        this.setState({
+          bolts:this.state.bolts.map(bolt=>{
+            bolt.active = true;
+            return bolt; 
+          })
+        }) 
+      } else {
+        this.setState({
+          bolts:this.state.bolts.map(bolt=>{
+            if (this.state.bolts.indexOf(bolt) <= remainder) {
               bolt.active = true;
-              return bolt; 
-            })
-          }) 
-        }
-        else {
-          this.setState({
-            bolts:this.state.bolts.map(bolt=>{
-              if (this.state.bolts.indexOf(bolt) <= remainder) {
-                bolt.active = true;
-              }
-              return bolt; 
-            })
-          }) 
-        } 
-
-      } 
-
-      if (cue < activeBolts) clearInterval(clearLoop) 
+            }
+            return bolt; 
+          })
+        }) 
+      } */
 
     },750) 
 
@@ -114,7 +113,7 @@ configureWebSocket = () => {
 
   socketEvent = () => { 
     // Add clearCue state property for edge case when capacity indicator is false during a cue clearing 
-    console.log('getBoltsActive()',this.getBoltsActive()); 
+    //console.log('getBoltsActive()',this.getBoltsActive()); 
     let atCapacity = this.atCapacity(); 
 
     if ((atCapacity) || (this.state.clearingCue)) { 
@@ -142,8 +141,8 @@ configureWebSocket = () => {
   }
 
   resetBolt = (boltIndex) => { 
-    console.log("animation end");
-    console.log("boltIndex: ",boltIndex); 
+    //console.log("animation end");
+    //console.log("boltIndex: ",boltIndex); 
     this.setState({
       bolts: this.state.bolts.map(bolt=>{
         if (this.state.bolts.indexOf(bolt === boltIndex)) {
