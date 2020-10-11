@@ -24,9 +24,9 @@ class LightningBolts extends Component  {
   constructor() {
     super();
     this.state = {
+      bolts: bolts ,
       cue: 0,
       clearingCue: false,
-      bolts: bolts 
     }
   }
 
@@ -50,13 +50,40 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    console.log('clearCue()');
+    console.log('clearCue()'); 
 
-    let activeBolts = this.getBoltsActive(); 
+    const clearingCue = setInterval(()=>{
 
-    clearLoop = setInterval(()=>{
+      console.log('clearingCue()',this.state.cue,' bolts'); 
 
-      console.log('clearLoop()',this.state.cue,' bolts'); 
+      let clearLoop = false;
+
+      const activeBolts = this.getBoltsActive(); 
+      let boltsToClear = this.state.bolts.length - this.getBoltsActive(); 
+
+      console.log('activeBolts',activeBolts)
+
+      //console.log('boltstoclear',typeof(boltsToClear));
+      //console.log('this.getBoltsActive()',typeof(this.getBoltsActive()));
+
+      if (this.state.cue < activeBolts) {
+        boltsToClear -= this.state.cue;
+        clearLoop = true;
+      }
+
+      //console.log('boltsToClear',boltsToClear);
+
+      this.setState({
+        bolts:this.state.bolts.map(bolt=>{
+          if (this.state.bolts.indexOf(bolt) < boltsToClear) {
+            bolt.active = true;
+          } 
+          return bolt; 
+        }),
+        cue: this.state.cue - boltsToClear,
+        clearingCue: clearLoop ? true : false
+      })
+
       //console.log('state cue',this.state.cue); 
 
       /*const remainder = this.state.cue - this.getBoltsActive(); 
