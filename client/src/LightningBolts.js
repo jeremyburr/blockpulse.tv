@@ -53,24 +53,25 @@ configureWebSocket = () => {
     console.log('clearCue()');
 
     let activeBolts = this.getBoltsActive(); 
-    //console.log('activeBolts',activeBolts);
 
-    if (clearLoop) return;
-    
     clearLoop = setInterval(()=>{
 
-      const cue =  this.state.cue; 
+      console.log('clearLoop()',this.state.cue,' bolts'); 
+      //console.log('state cue',this.state.cue); 
 
-      const remainder = cue > this.state.bolts.length; 
+      /*const remainder = this.state.cue - this.getBoltsActive(); 
 
-      if (remainder <=0 )  { 
+      //if (this.state.cue = 0) return;
+
+      if (remainder <0 )  { 
           this.setState({
-            clearCue: false
+            clearingCue: false
           }) 
         clearInterval(clearLoop) 
+        console.log('clearedTheLoop');
         return; 
-
-      } /*else if (remainder > this.state.bolts.length) { 
+      } else if (remainder > this.state.bolts.length) { 
+        console.log('clearing');
         this.setState({
           bolts:this.state.bolts.map(bolt=>{
             bolt.active = true;
@@ -78,6 +79,7 @@ configureWebSocket = () => {
           })
         }) 
       } else {
+        console.log('clearing');
         this.setState({
           bolts:this.state.bolts.map(bolt=>{
             if (this.state.bolts.indexOf(bolt) <= remainder) {
@@ -86,7 +88,7 @@ configureWebSocket = () => {
             return bolt; 
           })
         }) 
-      } */
+      }*/ 
 
     },750) 
 
@@ -112,37 +114,28 @@ configureWebSocket = () => {
   atCapacity = () => this.state.bolts.length === this.getBoltsActive(); 
 
   socketEvent = () => { 
-    // Add clearCue state property for edge case when capacity indicator is false during a cue clearing 
-    //console.log('getBoltsActive()',this.getBoltsActive()); 
     let atCapacity = this.atCapacity(); 
-
-    if ((atCapacity) || (this.state.clearingCue)) { 
-      //console.log('at capacity');
+    if (atCapacity || this.state.clearingCue) { 
       this.incrementCue(); 
     } 
     else if (!atCapacity) { 
       this.sendBolt(); 
-      //console.log('not capacity');
     } 
-     
   } 
 
   componentDidMount() {
     this.configureWebSocket();
-  }
-
-  // Optimization inside shouldComponentUpdate?
+  } 
 
   componentDidUpdate() { 
-    console.log('state cue',this.state.cue); 
-    if ((this.state.cue > 0) && (!this.state.clearingCue)) 
-      this.setState({clearingCue: true})
-    else if (this.state.clearingCue) this.clearCue();  
+    //console.log('state cue',this.state.cue); 
+    if ((this.state.cue > 0) && (!this.state.clearingCue)) {
+      console.log('setState: clearingCue');
+      this.setState({clearingCue: true}, this.clearCue());
+    }
   }
 
   resetBolt = (boltIndex) => { 
-    //console.log("animation end");
-    //console.log("boltIndex: ",boltIndex); 
     this.setState({
       bolts: this.state.bolts.map(bolt=>{
         if (this.state.bolts.indexOf(bolt === boltIndex)) {
