@@ -34,7 +34,7 @@ configureWebSocket = () => {
     var websocket = this.props.websocket; 
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
-        //console.log(JSON.parse(evt.data));
+        console.log(JSON.parse(evt.data));
         this.socketEvent();
       } 
     } 
@@ -50,11 +50,11 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    console.log('start interval')
+    //console.log('start interval')
 
     clearBolts = setInterval(()=>{
 
-      console.log('clearingCue()',this.state.cue,' bolts'); 
+      //console.log('clearingCue()',this.state.cue,' bolts'); 
 
       let clearLoop = false; 
 
@@ -76,7 +76,7 @@ configureWebSocket = () => {
       })
 
       if (clearLoop) {
-        console.log('clearInterval')
+        //console.log('clearInterval')
         clearInterval(clearBolts);
       }
       
