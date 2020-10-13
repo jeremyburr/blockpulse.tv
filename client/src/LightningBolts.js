@@ -18,7 +18,7 @@ const bolts =
     {active: false, timestamp: Date.now()}*/
   ];
 
-  let clearLoop = undefined;
+let clearBolts = undefined;
 
 class LightningBolts extends Component  {
   constructor() {
@@ -50,7 +50,9 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    const clearingCue = setInterval(()=>{
+    console.log('start interval')
+
+    clearBolts = setInterval(()=>{
 
       console.log('clearingCue()',this.state.cue,' bolts'); 
 
@@ -64,16 +66,19 @@ configureWebSocket = () => {
 
       this.setState({
         bolts:this.state.bolts.map(bolt=>{
-          if (this.state.bolts.indexOf(bolt) < this.getBoltsAvailable()) {
+          if (this.state.bolts.indexOf(bolt) < boltsToClear) {
             bolt.active = true;
           } 
           return bolt; 
         }),
-        cue: this.state.cue - this.getBoltsAvailable(),
+        cue: this.state.cue - boltsToClear,
         clearingCue: clearLoop ? false : true
       })
 
-      if (clearLoop) clearInterval(clearingCue );
+      if (clearLoop) {
+        console.log('clearInterval')
+        clearInterval(clearBolts);
+      }
       
     },750) 
 
@@ -113,9 +118,7 @@ configureWebSocket = () => {
   } 
 
   componentDidUpdate() { 
-    //console.log('state cue',this.state.cue); 
     if ((this.state.cue > 0) && (!this.state.clearingCue)) {
-      console.log('setState: clearingCue');
       this.setState({clearingCue: true}, this.clearCue());
     }
   }
@@ -135,8 +138,6 @@ configureWebSocket = () => {
 
     let dValues = "M 40 5 L 40 25 L 40 25 L 35 25 L 40 50 L 40 30 L 45 30 L 40 5" 
     let viewBox = "0 0 400 400";
-
-    // Separate into path class component for better rendering optimization?
 
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
