@@ -58,11 +58,11 @@ configureWebSocket = () => {
 
       let clearLoop = false; 
 
-      let boltsToClear = this.getBoltsAvailable(); 
-
       if (this.state.cue < this.getBoltsAvailable()) {
         clearLoop = true;
       } 
+
+      const boltsToClear = clearLoop ? this.state.cue : this.state.bolts.length;
 
       this.setState({
         bolts:this.state.bolts.map(bolt=>{
@@ -71,9 +71,9 @@ configureWebSocket = () => {
           } 
           return bolt; 
         }),
-        cue: this.state.cue - boltsToClear,
+        cue: this.state.cue - this.getBoltsAvailable(),
         clearingCue: clearLoop ? false : true
-      }) 
+      })
       
     },750) 
 
