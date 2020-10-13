@@ -38,15 +38,15 @@ configureWebSocket = () => {
         this.socketEvent();
       } 
     } 
-  }
+  } 
   
-  getBoltsActive = () => { 
+  getBoltsAvailable = () => { 
     let boltsActive = 0; 
     for (const bolt of this.state.bolts) { 
       if (bolt.active) boltsActive++ 
     } 
-    return boltsActive;
-  } 
+    return this.state.bolts.length - boltsActive;
+  }
 
   clearCue = () => { 
 
@@ -56,67 +56,25 @@ configureWebSocket = () => {
 
       console.log('clearingCue()',this.state.cue,' bolts'); 
 
-      let clearLoop = false;
+      let clearLoop = false; 
 
-      const activeBolts = this.getBoltsActive(); 
-      let boltsToClear = this.state.bolts.length - this.getBoltsActive(); 
+      let boltsToClear = this.getBoltsAvailable(); 
 
-      console.log('activeBolts',activeBolts)
-
-      //console.log('boltstoclear',typeof(boltsToClear));
-      //console.log('this.getBoltsActive()',typeof(this.getBoltsActive()));
-
-      if (this.state.cue < activeBolts) {
-        boltsToClear -= this.state.cue;
+      if (this.state.cue < this.getBoltsAvailable()) {
         clearLoop = true;
-      }
-
-      //console.log('boltsToClear',boltsToClear);
+      } 
 
       this.setState({
         bolts:this.state.bolts.map(bolt=>{
-          if (this.state.bolts.indexOf(bolt) < boltsToClear) {
+          if (this.state.bolts.indexOf(bolt) < this.getBoltsAvailable()) {
             bolt.active = true;
           } 
           return bolt; 
         }),
         cue: this.state.cue - boltsToClear,
-        clearingCue: clearLoop ? true : false
-      })
-
-      //console.log('state cue',this.state.cue); 
-
-      /*const remainder = this.state.cue - this.getBoltsActive(); 
-
-      //if (this.state.cue = 0) return;
-
-      if (remainder <0 )  { 
-          this.setState({
-            clearingCue: false
-          }) 
-        clearInterval(clearLoop) 
-        console.log('clearedTheLoop');
-        return; 
-      } else if (remainder > this.state.bolts.length) { 
-        console.log('clearing');
-        this.setState({
-          bolts:this.state.bolts.map(bolt=>{
-            bolt.active = true;
-            return bolt; 
-          })
-        }) 
-      } else {
-        console.log('clearing');
-        this.setState({
-          bolts:this.state.bolts.map(bolt=>{
-            if (this.state.bolts.indexOf(bolt) <= remainder) {
-              bolt.active = true;
-            }
-            return bolt; 
-          })
-        }) 
-      }*/ 
-
+        clearingCue: clearLoop ? false : true
+      }) 
+      
     },750) 
 
   } 
@@ -126,10 +84,10 @@ configureWebSocket = () => {
   } 
 
   sendBolt = () => { 
-    const boltsActive = this.getBoltsActive();
+    const boltsAvailable = this.getBoltsAvailable();
     this.setState({ 
       bolts:this.state.bolts.map(bolt => { 
-        if (this.state.bolts.indexOf(bolt) === boltsActive) { 
+        if (this.state.bolts.indexOf(bolt) >= this.state.bolts.length - this.getBoltsAvailable()) { 
           bolt.active = true; 
           bolt.timestamp = Date.now(); 
         } 
@@ -138,7 +96,7 @@ configureWebSocket = () => {
     })
   } 
 
-  atCapacity = () => this.state.bolts.length === this.getBoltsActive(); 
+  atCapacity = () => this.getBoltsAvailable() === 0;
 
   socketEvent = () => { 
     let atCapacity = this.atCapacity(); 
