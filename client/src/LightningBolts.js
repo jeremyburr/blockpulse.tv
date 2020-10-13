@@ -50,8 +50,6 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
-    console.log('clearCue()'); 
-
     const clearingCue = setInterval(()=>{
 
       console.log('clearingCue()',this.state.cue,' bolts'); 
@@ -74,6 +72,8 @@ configureWebSocket = () => {
         cue: this.state.cue - this.getBoltsAvailable(),
         clearingCue: clearLoop ? false : true
       })
+
+      if (clearLoop) clearInterval(clearingCue );
       
     },750) 
 
