@@ -2,21 +2,10 @@ import React, { Component } from 'react';
 import "./pulsometer.scss"; 
 //import $ from "jquery"; 
 
-
 const bolts =  
-  [
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    /*{active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()},
-    {active: false, timestamp: Date.now()}*/
-  ];
+  [false,false,false,false,
+   false,false,false,false,
+   false,false,false];
 
 let clearBolts = undefined;
 
@@ -34,7 +23,7 @@ configureWebSocket = () => {
     var websocket = this.props.websocket; 
     websocket.onopen = (evt) => { 
       websocket.onmessage = (evt) => { 
-        console.log(JSON.parse(evt.data));
+        //console.log(JSON.parse(evt.data));
         this.socketEvent();
       } 
     } 
@@ -42,19 +31,15 @@ configureWebSocket = () => {
   
   getBoltsAvailable = () => { 
     let boltsActive = 0; 
-    for (const bolt of this.state.bolts) { 
-      if (bolt.active) boltsActive++ 
+    for (const active of this.state.bolts) { 
+      if (active) boltsActive++ 
     } 
     return this.state.bolts.length - boltsActive;
   }
 
   clearCue = () => { 
 
-    //console.log('start interval')
-
-    clearBolts = setInterval(()=>{
-
-      //console.log('clearingCue()',this.state.cue,' bolts'); 
+    clearBolts = setInterval(()=>{ 
 
       let clearLoop = false; 
 
@@ -64,10 +49,14 @@ configureWebSocket = () => {
 
       const boltsToClear = clearLoop ? this.state.cue : this.state.bolts.length;
 
+      console.log('this.getBoltsAvailable()',this.getBoltsAvailable());
+      console.log('this.state.cue',this.state.cue);
+      console.log('boltsToClear',boltsToClear);
+
       this.setState({
         bolts:this.state.bolts.map(bolt=>{
           if (this.state.bolts.indexOf(bolt) < boltsToClear) {
-            bolt.active = true;
+            bolt = true;
           } 
           return bolt; 
         }),
@@ -76,7 +65,6 @@ configureWebSocket = () => {
       })
 
       if (clearLoop) {
-        //console.log('clearInterval')
         clearInterval(clearBolts);
       }
       
@@ -89,12 +77,10 @@ configureWebSocket = () => {
   } 
 
   sendBolt = () => { 
-    const boltsAvailable = this.getBoltsAvailable();
     this.setState({ 
       bolts:this.state.bolts.map(bolt => { 
-        if (this.state.bolts.indexOf(bolt) >= this.state.bolts.length - this.getBoltsAvailable()) { 
-          bolt.active = true; 
-          bolt.timestamp = Date.now(); 
+        if (this.state.bolts.indexOf(bolt) === (this.state.bolts.length - this.getBoltsAvailable()) ) { 
+          bolt = true; 
         } 
         return bolt; 
       })
@@ -118,6 +104,7 @@ configureWebSocket = () => {
   } 
 
   componentDidUpdate() { 
+    //console.log(this.state.cue);
     if ((this.state.cue > 0) && (!this.state.clearingCue)) {
       this.setState({clearingCue: true}, this.clearCue());
     }
@@ -127,12 +114,14 @@ configureWebSocket = () => {
     this.setState({
       bolts: this.state.bolts.map(bolt=>{
         if (this.state.bolts.indexOf(bolt === boltIndex)) {
-            bolt.active = false;
+            bolt = false;
         }
         return bolt; 
       })
     }) 
   }
+  
+  // LOOK INTO LIFECYCLE METHODS FOR OPTIMIZATION RENDERING - componentDidMount, componentDidUpdate, componentWillUnmount, componentShouldUpdate?
 
   render() { 
 
@@ -142,7 +131,7 @@ configureWebSocket = () => {
     return (
       <svg id="svg-lightning-bolt" viewBox={viewBox} className="lightning-bolt"> 
         {this.state.bolts.map((bolt,index) => (
-          <path onAnimationEnd={()=>this.resetBolt(index)} key={index} className={`bolt bolt-${index} ${bolt.active ? "on" : "off"}`} d={dValues} /> 
+          <path onAnimationEnd={()=>this.resetBolt(index)} key={index} className={`bolt bolt-${index} ${bolt ? "on" : "off"}`} d={dValues} /> 
         ))} 
       </svg>
     ) 
