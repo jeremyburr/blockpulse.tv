@@ -39,6 +39,8 @@ configureWebSocket = () => {
 
   clearCue = () => { 
 
+    console.log('clearCue()');
+
     clearBolts = setInterval(()=>{ 
 
       let clearLoop = false; 
@@ -49,9 +51,9 @@ configureWebSocket = () => {
 
       const boltsToClear = clearLoop ? this.state.cue : this.getBoltsAvailable();
 
-      console.log('this.getBoltsAvailable()',this.getBoltsAvailable());
-      console.log('this.state.cue',this.state.cue);
-      console.log('boltsToClear',boltsToClear);
+      //console.log('this.getBoltsAvailable()',this.getBoltsAvailable());
+      //console.log('boltsToClear',boltsToClear);
+      //console.log('this.state.cue',this.state.cue);
 
       this.setState({
         bolts:this.state.bolts.map(bolt=>{
@@ -65,6 +67,7 @@ configureWebSocket = () => {
       })
 
       if (clearLoop) {
+        console.log('clearLoop()');
         clearInterval(clearBolts);
       }
       
@@ -77,9 +80,10 @@ configureWebSocket = () => {
   } 
 
   sendBolt = () => { 
+    let nextBoltIndex = this.state.bolts.length - this.getBoltsAvailable();
     this.setState({ 
       bolts:this.state.bolts.map(bolt => { 
-        if (this.state.bolts.indexOf(bolt) === (this.state.bolts.length - this.getBoltsAvailable()) ) { 
+        if (this.state.bolts.indexOf(bolt) === nextBoltIndex ) { 
           bolt = true; 
         } 
         return bolt; 
@@ -102,6 +106,7 @@ configureWebSocket = () => {
   } 
 
   componentDidUpdate() { 
+    console.log('this.state.cue',this.state.cue);
     if ((this.state.cue > 0) && (!this.state.clearingCue)) {
       this.setState({clearingCue: true}, this.clearCue());
     }
@@ -118,7 +123,7 @@ configureWebSocket = () => {
     }) 
   }
   
-  // LOOK INTO LIFECYCLE METHODS FOR OPTIMIZATION RENDERING - componentDidMount, componentDidUpdate, componentWillUnmount, componentShouldUpdate?
+  // LOOK INTO LIFECYCLE METHODS FOR OPTIMIZATION RENDERING - componentDidMount, componentDidUpdate, componentWillUnmount, shouldComponentUpdate?
 
   render() { 
 
