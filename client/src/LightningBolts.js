@@ -47,7 +47,7 @@ configureWebSocket = () => {
         clearLoop = true;
       } 
 
-      const boltsToClear = clearLoop ? this.state.cue : this.state.bolts.length;
+      const boltsToClear = clearLoop ? this.state.cue : this.getBoltsAvailable();
 
       console.log('this.getBoltsAvailable()',this.getBoltsAvailable());
       console.log('this.state.cue',this.state.cue);
