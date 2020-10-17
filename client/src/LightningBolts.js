@@ -87,10 +87,8 @@ configureWebSocket = () => {
     })
   } 
 
-  atCapacity = () => this.getBoltsAvailable() === 0;
-
   socketEvent = () => { 
-    let atCapacity = this.atCapacity(); 
+    let atCapacity = this.getBoltsAvailable() === 0;
     if (atCapacity || this.state.clearingCue) { 
       this.incrementCue(); 
     } 
@@ -104,7 +102,6 @@ configureWebSocket = () => {
   } 
 
   componentDidUpdate() { 
-    //console.log(this.state.cue);
     if ((this.state.cue > 0) && (!this.state.clearingCue)) {
       this.setState({clearingCue: true}, this.clearCue());
     }
