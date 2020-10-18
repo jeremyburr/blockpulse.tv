@@ -4,8 +4,8 @@ import "./pulsometer.scss";
 
 const bolts =  
   [false,false,false,false,
-   false,false,false,false,
-   false,false,false];
+   false/*,false,false,false,
+  false,false,false*/];
 
 let clearBolts = undefined;
 
@@ -16,6 +16,7 @@ class LightningBolts extends Component  {
       bolts: bolts ,
       cue: 0,
       clearingCue: false,
+      eventCount: 0
     }
   }
 
@@ -76,18 +77,22 @@ configureWebSocket = () => {
   } 
 
   incrementCue = () => { 
-    this.setState({cue:this.state.cue+1}) 
+    this.setState({
+      cue:this.state.cue+1,
+      eventCount:this.state.eventCount + 1
+    }) 
   } 
 
   sendBolt = () => { 
     let nextBoltIndex = this.state.bolts.length - this.getBoltsAvailable();
     this.setState({ 
-      bolts:this.state.bolts.map(bolt => { 
-        if (this.state.bolts.indexOf(bolt) === nextBoltIndex ) { 
+      bolts:this.state.bolts.map( (bolt,index) => { 
+        if (index === nextBoltIndex ) { 
           bolt = true; 
         } 
         return bolt; 
-      })
+      }),
+      eventCount:this.state.eventCount + 1
     })
   } 
 
@@ -106,7 +111,8 @@ configureWebSocket = () => {
   } 
 
   componentDidUpdate() { 
-    console.log('this.state.cue',this.state.cue);
+    //console.log('this.state.cue',this.state.cue);
+    //console.log('this.state.eventCount',this.state.eventCount);
     if ((this.state.cue > 0) && (!this.state.clearingCue)) {
       this.setState({clearingCue: true}, this.clearCue());
     }
