@@ -4,8 +4,8 @@ import "./pulsometer.scss";
 
 const bolts =  
   [false,false,false,false,
-   false/*,false,false,false,
-  false,false,false*/];
+   false,false,false,false,
+  false,false,false];
 
 let clearBolts = undefined;
 
@@ -44,6 +44,8 @@ configureWebSocket = () => {
 
     clearBolts = setInterval(()=>{ 
 
+      console.log('clearBolts()');
+
       let clearLoop = false; 
 
       if (this.state.cue < this.getBoltsAvailable()) {
@@ -72,7 +74,7 @@ configureWebSocket = () => {
         clearInterval(clearBolts);
       }
       
-    },750) 
+    },650) 
 
   } 
 

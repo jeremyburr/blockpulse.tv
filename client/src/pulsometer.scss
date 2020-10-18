@@ -48,7 +48,7 @@ html, body, #root, .app {
         
 
         &.bolt-0 {
-          animation: bolt-0 .75s ease 1; 
+          animation: bolt-0 .6s ease 1; 
           @keyframes bolt-0 {
             from { opacity: 1; transform: translate(143px,270px)}
             to { opacity: 1; transform: translate(143px,6px)}
@@ -56,7 +56,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-0;}
         }
         &.bolt-1 {
-          animation: bolt-1 .75s ease 1; 
+          animation: bolt-1 .6s ease 1; 
           @keyframes bolt-1 {
             from {opacity: 1; transform: translate(143px,270px)}
             to {opacity: 1; transform: translate(113px,25px) rotate(-15deg)}
@@ -65,7 +65,7 @@ html, body, #root, .app {
         }
         &.bolt-2 {
           transform: scaleX(-1);
-          animation: bolt-2 .75s ease 1; 
+          animation: bolt-2 .6s ease 1; 
           @keyframes bolt-2 {
             from {opacity: 1; transform: translate(143px,270px)}
             to {opacity: 1; transform: translate(173px,8px)rotate(15deg)}
@@ -73,7 +73,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-2}
         } 
         &.bolt-3 {
-          animation: bolt-3 .75s ease 1; 
+          animation: bolt-3 .6s ease 1; 
           @keyframes bolt-3 {
             from {opacity: 1; transform: translate(143px,270px)}
             to {opacity: 1; transform: translate(83px,50px) rotate(-35deg)}
@@ -81,7 +81,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-3}
         }
         &.bolt-4 {
-          animation: bolt-4 .75s ease 1; 
+          animation: bolt-4 .6s ease 1; 
           @keyframes bolt-4 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(210px,10px) rotate(35deg)}
@@ -89,7 +89,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-4}
         }
         &.bolt-5 {
-          animation: bolt-5 .75s ease 1; 
+          animation: bolt-5 .6s ease 1; 
           @keyframes bolt-5 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(50px,65px) rotate(-45deg)}
@@ -97,7 +97,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-5}
         }
         &.bolt-6 {
-          animation: bolt-6 .75s ease 1; 
+          animation: bolt-6 .6s ease 1; 
           @keyframes bolt-6 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(245px,20px) rotate(45deg)}
@@ -105,7 +105,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-6}
         }
         &.bolt-7 {
-          animation: bolt-7 .75s ease 1; 
+          animation: bolt-7 .6s ease 1; 
           @keyframes bolt-7 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(30px,90px) rotate(-55deg)}
@@ -113,7 +113,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-7}
         }
         &.bolt-8 {
-          animation: bolt-8 .75s ease 1; 
+          animation: bolt-8 .6s ease 1; 
           @keyframes bolt-8 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(275px,35px) rotate(55deg)}
@@ -121,7 +121,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-8}
         }
         &.bolt-9 {
-          animation: bolt-9 .75s ease 1; 
+          animation: bolt-9 .6s ease 1; 
           @keyframes bolt-9 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(10px,115px) rotate(-65deg)}
@@ -129,7 +129,7 @@ html, body, #root, .app {
           &.on {animation-name: bolt-9}
         }
         &.bolt-10 {
-          animation: bolt-10 .75s ease 1; 
+          animation: bolt-10 .6s ease 1; 
           @keyframes bolt-10 {
             from {opacity: 1; transform: translate(143px,270px) }
             to {opacity: 1; transform: translate(300px,55px) rotate(65deg)}
